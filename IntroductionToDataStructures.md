@@ -8,11 +8,6 @@ Available at: https://github.com/fsemiz/Introduction-To-Data-Structures
 
 ### Introduction
 
-**DevOps** is short for **Dev**elopment and **Op**eration**s**.
-It concentrates on collaboration between developers and other parties involved in building, deploying, operating, and maintaining software systems.
+To put it briefly, data structures are containers used to store data. However, each data structure is generally built to store a certain type of data. A data structure may be efficient in some operations but inefficient in other operations, and this is often the case. For this reason, we must choose data structures in accordance with the data at hand. For example, if you try to drink a soup with a fork, it will take you quite a while to finish it. However, if you use a spoon for soup and a fork for pasta, you will see that you can eat both fast this time. The purpose of this session will be to go over the topics of data structures as well as to remind you where and what type of data structures are used in which situation.
 
-DevOps is a software engineering culture that unites the development and operations team under an umbrella of tools to automate every stage.
-
-**DevOps is a set of cultural norms and technical practices that enable this fast flow of work from dev through test through operations while preserving world class reliability.** - Gene Kim
-
-**DevOps blends lean thinking with agile philosophy.**
+<img src="./images/SoupWithFork.jpg" alt="Soup with fork." style="zoom:15%;" />
