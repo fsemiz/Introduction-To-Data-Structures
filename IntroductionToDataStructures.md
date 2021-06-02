@@ -12,4 +12,4 @@ To put it briefly, data structures are containers used to store data. However, e
 
 | ![Soup with fork](./images/SoupWithFork.jpg) | 
 |:--:| 
-| *Soup with fork (retrieved from https://www.linkedin.com/pulse/eating-soup-forks-michael-henderson/)* |
+| *Soup with fork (https://www.linkedin.com/pulse/eating-soup-forks-michael-henderson/)* |
