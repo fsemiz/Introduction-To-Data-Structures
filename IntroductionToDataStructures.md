@@ -7,7 +7,7 @@ Date: July 2021
 Available at: https://github.com/fsemiz/Introduction-To-Data-Structures
 
 ### Introduction
-| ![Algorithm](./images/SoupWithFork.jpg) | 
+| ![Algorithm](./images/Algorithm.jpg) | 
 |:--:| 
 | *Retrieved from https://www.techidence.com/whats-an-algorithm-understand-how-it-works-in-apps-and-websites/* |
 
