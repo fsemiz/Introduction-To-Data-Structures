@@ -83,4 +83,114 @@ Arrays are great if you want to add or remove element at the end. But it's expen
 
 However, a huge advantage for arrays is that we have constant time access to elements either read or write.
 
+#### Arrays in Java Programming Language
+
+Java provides a data structure, the array, which stores a fixed-size sequential collection of elements of the same type. 
+
+An array is used to store a collection of data, but it is often more useful to think of an array as a collection of variables of the same type.
+
+##### Declaring Array Variables
+
+To use an array in a program, you must declare a variable to reference the array, and you must specify the type of array the variable can reference.
+
+**Syntax:**
+
+```Java
+dataType[] arrayRefVar;   // preferred way.
+
+dataType arrayRefVar[];  // works but not preferred way.
+```
+
+**The following code snippets are examples of this syntax:**
+
+```Java
+double[] myList;   // preferred way.
+
+double myList[];   // works but not preferred way.
+```
+
+##### Creating Arrays
+
+You can create an array by using the new operator with the following syntax:
+
+```Java
+arrayRefVar = new dataType[arraySize];
+```
+
+The above statement does two things:
+
+- It creates an array using new dataType[arraySize].
+    
+- It assigns the reference of the newly created array to the variable arrayRefVar.
+
+Declaring an array variable, creating an array, and assigning the reference of the array to the variable can be combined in one statement, as shown below:
+
+```Java
+dataType[] arrayRefVar = new dataType[arraySize];
+```
+
+##### Example
+
+Following statement declares an array variable, myList, creates an array of 10 elements of double type and assigns its reference to myList:
+
+```Java
+double[] myList = new double[10];
+```
+
+Following picture represents array myList. Here, myList holds ten double values and the indices are from 0 to 9.
+
+| ![Java Array Example](./images/java_array_example.jpg) |
+|:--:|
+| *Retrieved from https://www.tutorialspoint.com/java/java_arrays.htm* |
+
+#### Arrays in Python Programming Language
+
+Python’s array module provides space-efficient storage of basic C-style data types like bytes, 32-bit integers, floating point numbers, and so on.
+
+Arrays created with the **array.array class** are **mutable** and behave similarly to lists, except for one important difference — they are “**typed arrays**” constrained to a single data type.
+
+Because of this constraint, array.array objects with many elements are more space-efficient than lists and tuples. The elements stored in them are tightly packed, and this can be useful if we need to store many elements of the same type.
+
+Also, arrays support many of the same methods as regular lists, and we might be able to use them as a “drop-in replacement” without requiring other changes to our application code.
+
+```Python
+>>> import array
+>>> arr = array.array('i', (22, 30, 10, 6))
+>>> arr[1]
+30 # Arrays are mutable
+>>> arr[1] = 25
+>>> arr
+array('i', [22, 25, 10, 6])
+>>> arr.append(27)
+>>> arr
+array('i', [22, 25, 10, 6, 27]) # Arrays are typed
+>>> arr[1] = "Sarah"
+TypeError: an integer is required (got type str)
+```
+
+### Linked Lists
+
+**In computer science, a linked list is a linear collection of data elements whose order is not given by their physical placement in memory. Instead, each element points to the next.**
+
+**It is a data structure consisting of a collection of nodes which together represent a sequence. In its most basic form, each node contains: data, and a reference (in other words, a link) to the next node in the sequence.** 
+
+This structure allows for efficient insertion or removal of elements from any position in the sequence during iteration. More complex variants add additional links, allowing more efficient insertion or removal of nodes at arbitrary positions. 
+
+A drawback of linked lists is that access time is linear (and difficult to pipeline). Faster access, such as random access, is not feasible. Arrays have better cache locality compared to linked lists.
+
+| <img src="./images/linked-lists-explaination.jpg" alt="Linked Lists Explaination" style="zoom: 67%;" /> |
+| :----------------------------------------------------------: |
+| *Retrieved from https://msatechnosoft.in/blog/linked-list-implementatio-types-singly-doubly-circular-example-with-code/* |
+
+Linked lists are among the simplest and most common data structures. **They can be used to implement several other common abstract data types, including lists, stacks, queues, associative arrays, and S-expressions, though it is not uncommon to implement those data structures directly without using a linked list as the basis.**
+
+The principal benefit of a linked list over a conventional array is that the list elements can be easily inserted or removed without reallocation or reorganization of the entire structure because the data items need not be stored contiguously in memory or on disk, while restructuring an array at run-time is a much more expensive operation. 
+
+Linked lists allow insertion and removal of nodes at any point in the list, and allow doing so with a constant number of operations by keeping the link previous to the link being added or removed in memory during list traversal.
+
+On the other hand, since simple linked lists by themselves do not allow random access to the data or any form of efficient indexing, many basic operations—such as obtaining the last node of the list, finding a node that contains a given datum, or locating the place where a new node should be inserted—may require iterating through most or all of the list elements. 
+
+Linked lists are dynamic, so the length of a linked list can increase or decrease as necessary. Each node does not necessarily follow the previous one physically in the memory. 
+
+
 
