@@ -63,21 +63,21 @@ The set of valid index tuples and the addresses of the elements (and hence the e
 
 **The term array is often used to mean array data type, a kind of data type provided by most high-level programming languages that consists of a collection of values or variables that can be selected by one or more indices computed at run-time. Array types are often implemented by array structures; however, in some languages they may be implemented by hash tables, linked lists, search trees, or other data structures.**
 
-#### Times for Common Operations
+#### Times for Common Operations in Arrays
 
-| Location | Add | Remove |
-| :--: | :--: | :--: |
-| Beginning | O(n) | O(n) |
-| End | O(1) | O(1) |
-| Middle | O(n) | O(n) |
+| Location | Add (Create) | Remove (Delete) | Read | Write (Update) |
+| :--: | :--: | :--: | :--: | :--: |
+| Beginning | O(n) | O(n) | O(1) | O(1) |
+| End | O(1) | O(1) | O(1) | O(1) |
+| Middle | O(n) | O(n) | O(1) | O(1) |
 
-**AddEnd**: We just add it, then update the number of elements that are in use. That's an O(1) operation.
+**AddEnd(value)**: We just add it, then update the number of elements that are in use. That's an O(1) operation.
 
-**RemoveEnd**: As well, that's an O(1) operation. Because we just update the number of elements that are in use.
+**RemoveEnd()**: As well, that's an O(1) operation. Because we just update the number of elements that are in use.
 
-**RemoveBeginning**: Where it's get to be expensive, if we want to remove the first element. So we remove the first element, then we need to move all elements to the left (or down). That's an O(n) operation.
+**RemoveBeginning()**: Where it's get to be expensive, if we want to remove the first element. So we remove the first element, then we need to move all elements to the left (or down). That's an O(n) operation.
 
-**AddBeginning**: I we want to insert at the beginning, we need to move every element to the right (or up), then insert the element at the beginning.
+**AddBeginning(value)**: I we want to insert at the beginning, we need to move every element to the right (or up), then insert the element at the beginning.
 
 Arrays are great if you want to add or remove element at the end. But it's expensive if you want to add or remove in the middle or at the beginning.
 
@@ -120,7 +120,7 @@ arrayRefVar = new dataType[arraySize];
 The above statement does two things:
 
 - It creates an array using new dataType[arraySize].
-    
+  
 - It assigns the reference of the newly created array to the variable arrayRefVar.
 
 Declaring an array variable, creating an array, and assigning the reference of the array to the variable can be combined in one statement, as shown below:
@@ -190,7 +190,125 @@ Linked lists allow insertion and removal of nodes at any point in the list, and 
 
 On the other hand, since simple linked lists by themselves do not allow random access to the data or any form of efficient indexing, many basic operations—such as obtaining the last node of the list, finding a node that contains a given datum, or locating the place where a new node should be inserted—may require iterating through most or all of the list elements. 
 
-Linked lists are dynamic, so the length of a linked list can increase or decrease as necessary. Each node does not necessarily follow the previous one physically in the memory. 
+Linked lists are dynamic, so the length of a linked list can increase or decrease as necessary. Each node does not necessarily follow the previous one physically in the memory.
 
+#### Linear Data Structures
+
+**One characteristic of linked lists is that they are linear data structures, which means that there is a sequence and an order to how they are constructed and traversed.**
+
+We can think of a linear data structure like a game of hopscotch: in order to get to the end of the list, we have to go through all of the items in the list in order, or sequentially. 
+
+Linear structures, however, are the opposite of non-linear structures. **In non-linear data structures, items don’t have to be arranged in order, which means that we could traverse the data structure non-sequentially.**
+
+| <img src="./images/linear-vs-non-linear-structures.jpeg" alt="Linear vs. Non-Linear Data Structures" style="zoom: 50%;" /> |
+| :----------------------------------------------------------: |
+| *Retrieved from https://medium.com/basecs/whats-a-linked-list-anyway-part-1-d8b7e6508b9d* |
+
+#### Memory Management
+
+The biggest differentiator between arrays and linked lists is the way that they use memory in our machines. 
+
+When an array is created, it needs a certain amount of memory. If we had 7 letters that we needed to store in an array, we would need 7 bytes of memory to represent that array. But, we’d need all of that memory in one contiguous block. That is to say, our computer would need to locate 7 bytes of memory that was free, one byte next to the another, all together, in one place.
+
+On the other hand, when a linked list is born, it doesn’t need 7 bytes of memory all in one place. One byte could live somewhere, while the next byte could be stored in another place in memory altogether! Linked lists don’t need to take up a single block of memory; instead, the memory that they use can be scattered throughout.
+
+**The fundamental difference between arrays and linked lists is that arrays are static data structures, while linked lists are dynamic data structures.**
+
+A static data structure needs all of its resources to be allocated when the structure is created; this means that even if the structure was to grow or shrink in size and elements were to be added or removed, it still always needs a given size and amount of memory. If more elements needed to be added to a static data structure and it didn’t have enough memory, you’d need to copy the data of that array, for example, and recreate it with more memory, so that you could add elements to it.
+
+On the other hand, a dynamic data structure can shrink and grow in memory. It doesn’t need a set amount of memory to be allocated in order to exist, and its size and shape can change, and the amount of memory it needs can change as well.
+
+| ![Memory allocation in static versus dynamic data structures](./images/memory-allocation-static-versus-dynamic-data-structures.jpeg) |
+|:--:|
+| *Retrieved from https://medium.com/basecs/whats-a-linked-list-anyway-part-1-d8b7e6508b9d* |
+
+#### Basic Concepts and Nomenclature
+
+**Each record of a linked list is often called an 'element' or 'node'.**
+
+The field of each node that contains the address of the next node is usually called the 'next link' or 'next pointer'. The remaining fields are known as the 'data', 'information', 'value', 'cargo', or 'payload' fields.
+
+**The 'head' of a list is its first node.** 
+
+**The 'tail' of a list may refer either to the rest of the list after the head, or to the last node in the list.** 
+
+| <img src="./images/linked-list-generic.png" alt="Linked List Generic View" style="zoom: 50%;" /> |
+| :----------------------------------------------------------: |
+| *Retrieved from https://www.codecademy.com/learn/linear-data-structures-java/modules/singly-linked-lists-java/cheatsheet* |
+
+#### Linked List API
+
+The operations provided from the Linked List are given the table below:
+
+| Method Name | Explanation |
+| :--: | :--: |
+| PushFront(key) | add to front |
+| TopFront() | return front item |
+| PopFront() | remove front item |
+| PushBack(key) | add to back |
+| TopBack() | return back item |
+| PopBack() | remove back item |
+| Find(key) | is key in list? |
+| Erase(key) | remove key from list |
+| Empty() | empty list? |
+| AddBefore(node,key) | adds key before node |
+| AddAfter(node,key) | adds key after node |
+
+#### Removing a node from the middle of a linked list
+
+When removing a node from the middle of a linked list, it is necessary to adjust the link on the previous node so that it points to the following node. In the given illustration, the node a1 must point to the node a3 if the node a2 is removed from the linked list.
+
+| <img src="./images/removing_a_node-linked-list.png" alt="Removing a node from the middle of a linked list" style="zoom: 33%;" /> |
+| :----------------------------------------------------------: |
+| *Retrieved from https://www.codecademy.com/learn/linear-data-structures-java/modules/singly-linked-lists-java/cheatsheet* |
+
+#### Adding a new head node in a linked list
+
+When adding a new node to the start of a linked list, it is necessary to maintain the list by giving the new head node a link to the current head node. For instance, to add a new node a0 to the begining of the linked list, a0 should point to a1.
+
+| <img src="./images/new_head_node-linked-list.png" alt="Adding a new head node in a linked list" style="zoom: 33%;" /> |
+| :----------------------------------------------------------: |
+| *Retrieved from https://www.codecademy.com/learn/linear-data-structures-java/modules/singly-linked-lists-java/cheatsheet* |
+
+#### Singly-Linked List
+
+Singly linked lists contain nodes which have a data field as well as 'next' field, which points to the next node in line of nodes. 
+
+Singly-Linked List Node Contains:
+- key
+- next pointer
+
+| ![Singly-Linked List](./images/singly-linked-list.jpg) |
+|:--:|
+| *Retrieved from https://msatechnosoft.in/blog/linked-list-implementatio-types-singly-doubly-circular-example-with-code/* |
+
+#### Times for Common Operations in Singly-Linked List
+
+| Singly-Linked List API | No Tail Pointer | With Tail Pointer |
+| :--: | :--: | :--: |
+| PushFront(key) | O(1) | O(1) |
+| TopFront() | O(1) | O(1) |
+| PopFront() | O(1) | O(1) |
+| PushBack(key) | **O(n)** | **O(1)** |
+| TopBack() | **O(n)** | **O(1)** |
+| PopBack() | O(n) | O(n) |
+| Find(key) | O(n) | O(n) |
+| Erase(key) | O(n) | O(n) |
+| Empty() | O(1) | O(1) |
+| AddBefore(node,key) | O(n) | O(n) |
+| AddAfter(node,key) | O(n) | O(n) |
+
+#### Doubly-Linked List
+
+In a 'doubly linked list', each node contains, besides the next-node link, a second link field pointing to the 'previous' node in the sequence. The two links may be called 'forward('s') and 'backwards', or 'next' and 'prev'('previous'). 
+
+Doubly-Linked List Node Contains:
+- key
+- next pointer
+- previous pointer
+
+| ![Doubly-Linked List](./images/singly-linked-list.jpg) |
+|:--:|
+| *Retrieved from https://msatechnosoft.in/blog/linked-list-implementatio-types-singly-doubly-circular-example-with-code/* |
 
 
