@@ -207,7 +207,23 @@ The performance of an algorithm depends on the complexity of the operations used
 
 The indexed get and indexed set operations can be observed to have O(1) complexity. This complexity is achieved because the memory of a computer is randomly accessible, which is why it is called Random Access Memory.
 
+#### Differences Between Arrays and Lists in Python
 
+Now that we know their definitions and features, we can talk about the differences between lists and arrays in Python:
+
+- Arrays need to be declared. Lists don't, since they are built into Python. In the examples above, you saw that lists are created by simply enclosing a sequence of elements into square brackets. Creating an array, on the other hand, requires a specific function from either the array module (i.e., array.array()) or NumPy package (i.e., numpy.array()). Because of this, lists are used more often than arrays.
+
+- Arrays can store data very compactly and are more efficient for storing large amounts of data.
+
+- Arrays are great for numerical operations; lists cannot directly handle math operations. For example, you can divide each element of an array by the same number with just one line of code. If you try the same with a list, you'll get an error.
+
+So, when should you use a list and when should you use an array?
+
+- If you need to store a relatively short sequence of items and you don't plan to do any mathematical operations with it, a list is the preferred choice. This data structure will allow you to store an ordered, mutable, and indexed sequence of items without importing any additional modules or packages.
+
+- If you have a very long sequence of items, consider using an array. This structure offers more efficient data storage.
+
+- If you plan to do any numerical operations with your combination of items, use an array. Data analytics and data science rely heavily on (mostly NumPy) arrays.
 
 
 ### Linked Lists
@@ -378,7 +394,7 @@ In Java, LinkedList can be represented as a class and a Node as a separate class
 ```Java
 import java.io.*;
  
-// Java program to implement a Singly Linked List
+// Java program to implement a Singly Linked List without a tail pointer
 public class LinkedList {
  
     Node head; // head of list
@@ -704,13 +720,15 @@ In the Node class there are two pieces of information: the item is a reference t
 
 ```Python
 class LinkedList:
-    # This class is used internally by the LinkedList class. It is
-    # invisible from outside this class due to the two underscores
-    # that precede the class name. Python mangles names so that they
-    # are not recognizable outside the class when two underscores
-    # precede a name but aren’t followed by two underscores at the
-    # end of the name (i.e. an operator name).
+  
     class __Node:
+        # This class is used internally by the LinkedList class. It is
+        # invisible from outside this class due to the two underscores
+        # that precede the class name. Python mangles names so that they
+        # are not recognizable outside the class when two underscores
+        # precede a name but aren’t followed by two underscores at the
+        # end of the name (i.e. an operator name).
+
         def __init__(self, item, next=None):
             self.item = item
             self.next = next
@@ -733,72 +751,73 @@ class LinkedList:
         # dummy node to begin with. This dummy node will always be in
         # the first position in the list and will never contain an item.
         # Its purpose is to eliminate special cases in the code below.
-        self.first = LinkedList.__Node(None, None)
-        self.last = self.first
+
+        self.first = LinkedList.__Node(None, None)  # Head Pointer
+        self.last = self.first  # Tail Pointer
         self.numItems = 0
 
         for e in contents:
             self.append(e)
 
-        def __getitem__(self, index):
-            if index >= 0 and index < self.numItems:
-                cursor = self.first.getNext()
-                for i in range(index):
-                    cursor = cursor.getNext()
+    def __getitem__(self, index):
+        if index >= 0 and index < self.numItems:
+            cursor = self.first.getNext()
+            for i in range(index):
+                cursor = cursor.getNext()
             
             return cursor.getItem()
 
         raise IndexError("LinkedList index out of range")
 
-        def __setitem__(self, index, val):
-            if index >= 0 and index < self.numItems:
-                cursor = self.first.getNext()
-                for i in range(index):
-                    cursor = cursor.getNext()
-
-                cursor.setItem(val)
-                return
-
-            raise IndexError("LinkedList assignment index out of range")
-
-        def __add__(self,other):
-            if type(self) != type(other):
-                raise TypeError("Concatenate undefined for " + \
-                    str(type(self)) + " + " + str(type(other)))
-
-            result = LinkedList()
+    def __setitem__(self, index, val):
+        if index >= 0 and index < self.numItems:
             cursor = self.first.getNext()
-
-            while cursor != None:
-                result.append(cursor.getItem())
+            for i in range(index):
                 cursor = cursor.getNext()
 
-            cursor = other.first.getNext()
+            cursor.setItem(val)
+            return
 
-            while cursor != None:
-                result.append(cursor.getItem())
+        raise IndexError("LinkedList assignment index out of range")
+
+    def __add__(self,other):
+        if type(self) != type(other):
+            raise TypeError("Concatenate undefined for " + \
+                str(type(self)) + " + " + str(type(other)))
+
+        result = LinkedList()
+        cursor = self.first.getNext()
+
+        while cursor != None:
+            result.append(cursor.getItem())
+            cursor = cursor.getNext()
+
+        cursor = other.first.getNext()
+
+        while cursor != None:
+            result.append(cursor.getItem())
+            cursor = cursor.getNext()
+
+        return result
+
+    def append(self,item):
+        node = LinkedList.__Node(item)
+        self.last.setNext(node)
+        self.last = node
+        self.numItems += 1
+
+    def insert(self,index,item):
+        cursor = self.first
+
+        if index < self.numItems:
+            for i in range(index):
                 cursor = cursor.getNext()
 
-            return result
-
-        def append(self,item):
-            node = LinkedList.__Node(item)
-            self.last.setNext(node)
-            self.last = node
+            node = LinkedList.__Node(item, cursor.getNext())
+            cursor.setNext(node)
             self.numItems += 1
-
-        def insert(self,index,item):
-            cursor = self.first
-
-            if index < self.numItems:
-                for i in range(index):
-                    cursor = cursor.getNext()
-
-                node = LinkedList.__Node(item, cursor.getNext())
-                cursor.setNext(node)
-                self.numItems += 1
-            else:
-                self.append(item)
+        else:
+            self.append(item)
 ```
 
 | Operation | Complexity | Usage | Method |
@@ -816,4 +835,11 @@ class LinkedList:
 | membership | O(n) | a in x | x.\_\_contains\_\_(a) |
 | sort | N/A | N/A | N/A |
 
+<!-- Ordered vs Unordered Data Structures -->
+
+
+<!-- Stacks -->
+
+
+<!-- Queues -->
 
