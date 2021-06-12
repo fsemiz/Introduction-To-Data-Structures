@@ -1,4 +1,4 @@
-# Introduction to Data Structures
+# Introduction to Data Structures - Part II
 
 Authors: **Fatih Semiz - Kaan Keskin**
 

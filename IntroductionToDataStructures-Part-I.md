@@ -1,4 +1,4 @@
-# Introduction to Data Structures
+# Introduction to Data Structures - Part I
 
 Authors: **Fatih Semiz - Kaan Keskin**
 
@@ -63,7 +63,7 @@ The set of valid index tuples and the addresses of the elements (and hence the e
 
 **The term array is often used to mean array data type, a kind of data type provided by most high-level programming languages that consists of a collection of values or variables that can be selected by one or more indices computed at run-time. Array types are often implemented by array structures; however, in some languages they may be implemented by hash tables, linked lists, search trees, or other data structures.**
 
-#### Times for Common Operations in Arrays
+#### Running Times for Common Operations in Arrays
 
 | Location | Add (Create) | Remove (Delete) | Read | Write (Update) |
 | :--: | :--: | :--: | :--: | :--: |
@@ -145,6 +145,10 @@ Following picture represents array myList. Here, myList holds ten double values 
 
 #### Arrays in Python Programming Language
 
+An array is a vector containing homogeneous elements i.e. belonging to the same data type. Elements are allocated with contiguous memory locations allowing easy modification, that is, addition, deletion, accessing of elements. 
+
+In Python, we have to use the array module to declare arrays. If the elements of an array belong to different data types, an exception “Incompatible data types” is thrown.
+
 Python’s array module provides space-efficient storage of basic C-style data types like bytes, 32-bit integers, floating point numbers, and so on.
 
 Arrays created with the **array.array class** are **mutable** and behave similarly to lists, except for one important difference — they are “**typed arrays**” constrained to a single data type.
@@ -167,6 +171,44 @@ array('i', [22, 25, 10, 6, 27]) # Arrays are typed
 >>> arr[1] = "Sarah"
 TypeError: an integer is required (got type str)
 ```
+
+#### Lists in Python Programming Language
+
+A list in Python is a collection of items which can contain elements of multiple data types, which may be either numeric, character logical values, etc. It is an ordered collection supporting negative indexing. A list can be created using [] containing data values.
+
+Contents of lists can be easily merged and copied using python’s inbuilt functions.
+
+```Python
+# creating a list containing elements 
+# belonging to different data types
+>>> sample_list = [1,"Yash",['a','e']]
+>>> print(sample_list)
+[1, 'Yash', ['a', 'e']]
+```
+
+| Operation | Complexity | Usage | Method |
+| :--: | :--: | :--: | :--: |
+| List creation | O(n) or O(1) | x = list(y) | calls \_\_init\_\_(y) |
+| indexed get | O(1) | a = x[i] | x.\_\_getitem\_\_(i) |
+| indexed set | O(1) | x[i] = a | x.\_\_setitem\_\_(i,a) |
+| concatenate | O(n) | z=x+y  | z = x.\_\_add\_\_(y) |
+| append | O(1) | x.append(a) | x.append(a) |
+| insert | O(n) | x.insert(i,e) | x.insert(i,e) |
+| delete | O(n) | del x[i] | x.\_\_delitem\_\_(i) |
+| equality | O(n) | x == y | x.\_\_eq\_\_(y) |
+| iterate | O(n) | for a in x: | x.\_\_iter\_\_() |
+| length | O(1) | len(x) | x.\_\_len\_\_() |
+| membership | O(n) | a in x | x.\_\_contains\_\_(a) |
+| sort | O(n log n) | x.sort() | x.sort() |
+
+Each of the operations in the table has an associated complexity. 
+
+The performance of an algorithm depends on the complexity of the operations used in implementing that algorithm. 
+
+The indexed get and indexed set operations can be observed to have O(1) complexity. This complexity is achieved because the memory of a computer is randomly accessible, which is why it is called Random Access Memory.
+
+
+
 
 ### Linked Lists
 
@@ -282,7 +324,7 @@ Singly-Linked List Node Contains:
 |:--:|
 | *Retrieved from https://msatechnosoft.in/blog/linked-list-implementatio-types-singly-doubly-circular-example-with-code/* |
 
-#### Times for Common Operations in Singly-Linked List
+#### Running Times for Common Operations in Singly-Linked List
 
 | Singly-Linked List API | No Tail Pointer | With Tail Pointer |
 | :--: | :--: | :--: |
@@ -300,15 +342,478 @@ Singly-Linked List Node Contains:
 
 #### Doubly-Linked List
 
-In a 'doubly linked list', each node contains, besides the next-node link, a second link field pointing to the 'previous' node in the sequence. The two links may be called 'forward('s') and 'backwards', or 'next' and 'prev'('previous'). 
+In a doubly linked list, each node contains, besides the next-node link, a second link field pointing to the **previous** node in the sequence. The two links may be called **forward('s')** and **backwards**, or **next** and **prev** (**previous**). 
 
 Doubly-Linked List Node Contains:
 - key
 - next pointer
 - previous pointer
 
-| ![Doubly-Linked List](./images/singly-linked-list.jpg) |
+| ![Doubly-Linked List](./images/doubly-linked-list.png) |
 |:--:|
 | *Retrieved from https://msatechnosoft.in/blog/linked-list-implementatio-types-singly-doubly-circular-example-with-code/* |
+
+#### Running Times for Common Operations in Doubly-Linked List
+
+| Doubly-Linked List API | No Tail Pointer | With Tail Pointer |
+| :--: | :--: | :--: |
+| PushFront(key) | O(1) | O(1) |
+| TopFront() | O(1) | O(1) |
+| PopFront() | O(1) | O(1) |
+| PushBack(key) | **O(n)** | **O(1)** |
+| TopBack() | **O(n)** | **O(1)** |
+| PopBack() | **O(1)** | **O(1)** |
+| Find(key) | O(n) | O(n) |
+| Erase(key) | O(n) | O(n) |
+| Empty() | O(1) | O(1) |
+| AddBefore(node,key) | **O(1)** | **O(1)** |
+| AddAfter(node,key) | O(n) | O(n) |
+
+#### Implementing a Singly-Linked List in Java Programming Language
+
+Like arrays, Linked List is a linear data structure. Unlike arrays, linked list elements are not stored at the contiguous location, the elements are linked using pointers.
+
+In Java, LinkedList can be represented as a class and a Node as a separate class. The LinkedList class contains a reference of Node class type.
+
+```Java
+import java.io.*;
+ 
+// Java program to implement a Singly Linked List
+public class LinkedList {
+ 
+    Node head; // head of list
+ 
+    // Linked list Node.
+    // Node is a static nested class so main() can access it
+    static class Node {
+ 
+        int data; // Type of the data stored in the node
+        Node next;
+ 
+        // Constructor
+        Node(int d)
+        {
+            data = d;
+            next = null;
+        }
+    }
+ 
+    // **************INSERTION**************
+ 
+    // Method to insert a new node
+    public static LinkedList insert(LinkedList list, int data)
+    {
+        // Create a new node with given data
+        Node new_node = new Node(data);
+        new_node.next = null;
+ 
+        // If the Linked List is empty,
+        // then make the new node as head
+        if (list.head == null) {
+            list.head = new_node;
+        } else {
+            // Else traverse till the last node
+            // and insert the new_node there
+            Node last = list.head;
+            while (last.next != null) {
+                last = last.next;
+            }
+ 
+            // Insert the new_node at last node
+            last.next = new_node;
+        }
+ 
+        // Return the list by head
+        return list;
+    }
+ 
+    // **************TRAVERSAL**************
+ 
+    // Method to print the LinkedList.
+    public static void printList(LinkedList list)
+    {
+        Node currNode = list.head;
+ 
+        System.out.print("\nLinkedList: ");
+ 
+        // Traverse through the LinkedList
+        while (currNode != null) {
+            // Print the data at current node
+            System.out.print(currNode.data + " ");
+ 
+            // Go to next node
+            currNode = currNode.next;
+        }
+        System.out.println("\n");
+    }
+ 
+    // **************DELETION BY KEY**************
+ 
+    // Method to delete a node in the LinkedList by KEY
+    public static LinkedList deleteByKey(LinkedList list,
+                                         int key)
+    {
+        // Store head node
+        Node currNode = list.head, prev = null;
+ 
+        //
+        // CASE 1:
+        // If head node itself holds the key to be deleted
+ 
+        if (currNode != null && currNode.data == key) {
+            list.head = currNode.next; // Changed head
+ 
+            // Display the message
+            System.out.println(key + " found and deleted");
+ 
+            // Return the updated List
+            return list;
+        }
+ 
+        //
+        // CASE 2:
+        // If the key is somewhere other than at head
+        //
+ 
+        // Search for the key to be deleted,
+        // keep track of the previous node
+        // as it is needed to change currNode.next
+        while (currNode != null && currNode.data != key) {
+            // If currNode does not hold key
+            // continue to next node
+            prev = currNode;
+            currNode = currNode.next;
+        }
+ 
+        // If the key was present, it should be at currNode
+        // Therefore the currNode shall not be null
+        if (currNode != null) {
+            // Since the key is at currNode
+            // Unlink currNode from linked list
+            prev.next = currNode.next;
+ 
+            // Display the message
+            System.out.println(key + " found and deleted");
+        }
+ 
+        //
+        // CASE 3: The key is not present
+        //
+ 
+        // If key was not present in linked list
+        // currNode should be null
+        if (currNode == null) {
+            // Display the message
+            System.out.println(key + " not found");
+        }
+ 
+        // return the List
+        return list;
+    }
+ 
+    // **************DELETION AT A POSITION**************
+ 
+    // Method to delete a node in the LinkedList by POSITION
+    public static LinkedList
+    deleteAtPosition(LinkedList list, int index)
+    {
+        // Store head node
+        Node currNode = list.head, prev = null;
+ 
+        //
+        // CASE 1:
+        // If index is 0, then head node itself is to be
+        // deleted
+ 
+        if (index == 0 && currNode != null) {
+            list.head = currNode.next; // Changed head
+ 
+            // Display the message
+            System.out.println(
+                index + " position element deleted");
+ 
+            // Return the updated List
+            return list;
+        }
+ 
+        //
+        // CASE 2:
+        // If the index is greater than 0 but less than the
+        // size of LinkedList
+        //
+        // The counter
+        int counter = 0;
+ 
+        // Count for the index to be deleted,
+        // keep track of the previous node
+        // as it is needed to change currNode.next
+        while (currNode != null) {
+ 
+            if (counter == index) {
+                // Since the currNode is the required
+                // position Unlink currNode from linked list
+                prev.next = currNode.next;
+ 
+                // Display the message
+                System.out.println(
+                    index + " position element deleted");
+                break;
+            }
+            else {
+                // If current position is not the index
+                // continue to next node
+                prev = currNode;
+                currNode = currNode.next;
+                counter++;
+            }
+        }
+ 
+        // If the position element was found, it should be
+        // at currNode Therefore the currNode shall not be
+        // null
+        //
+        // CASE 3: The index is greater than the size of the
+        // LinkedList
+        //
+        // In this case, the currNode should be null
+        if (currNode == null) {
+            // Display the message
+            System.out.println(
+                index + " position element not found");
+        }
+ 
+        // return the List
+        return list;
+    }
+}
+```
+
+Usage of implemented LinkedList class:
+
+```Java
+    // **************MAIN METHOD**************
+ 
+    // method to create a Singly-Linked List with n nodes
+    public static void main(String[] args)
+    {
+        /* Start with the empty list. */
+        LinkedList list = new LinkedList();
+ 
+        //
+        // ******INSERTION******
+        //
+ 
+        // Insert the values
+        list = insert(list, 1);
+        list = insert(list, 2);
+        list = insert(list, 3);
+        list = insert(list, 4);
+        list = insert(list, 5);
+        list = insert(list, 6);
+        list = insert(list, 7);
+        list = insert(list, 8);
+ 
+        // Print the LinkedList
+        printList(list);
+ 
+        //
+        // ******DELETION BY KEY******
+        //
+ 
+        // Delete node with value 1
+        // In this case the key is ***at head***
+        deleteByKey(list, 1);
+ 
+        // Print the LinkedList
+        printList(list);
+ 
+        // Delete node with value 4
+        // In this case the key is present ***in the
+        // middle***
+        deleteByKey(list, 4);
+ 
+        // Print the LinkedList
+        printList(list);
+ 
+        // Delete node with value 10
+        // In this case the key is ***not present***
+        deleteByKey(list, 10);
+ 
+        // Print the LinkedList
+        printList(list);
+ 
+        //
+        // ******DELETION AT POSITION******
+        //
+ 
+        // Delete node at position 0
+        // In this case the key is ***at head***
+        deleteAtPosition(list, 0);
+ 
+        // Print the LinkedList
+        printList(list);
+ 
+        // Delete node at position 2
+        // In this case the key is present ***in the
+        // middle***
+        deleteAtPosition(list, 2);
+ 
+        // Print the LinkedList
+        printList(list);
+ 
+        // Delete node at position 10
+        // In this case the key is ***not present***
+        deleteAtPosition(list, 10);
+ 
+        // Print the LinkedList
+        printList(list);
+    }
+```
+
+#### Implementing a Singly-Linked List in Python Programming Language
+
+Sequences can be organized in several different ways. 
+
+The PyList sequence was a randomly accessible list. This means that we can access any element of the list in O(1) time to either store or retrieve a value. Appending an item was possible in O(1) time using amortized complexity analysis, but inserting an item took O(n) time where n was the number of items after the location where the new item was being inserted.
+
+If a programmer wants to insert a large number of items towards the beginning of a list, a different organization for a sequence might be better suited to their needs.
+
+A linked list is an organization of a list where each item in the list is in a separate node. Linked lists look like the links in a chain. Each link is attached to the next link by a reference that points to the next link in the chain. When working with a linked list, each link in the chain is called a Node. Each node consists of two pieces of information, an item, which is the data associated with the node, and a link to the next node in the linked list, often called next.
+
+```Python
+class Node:
+
+    def __init__(self, item, next=None):
+        self.item = item
+        self.next = next
+
+    def getItem(self):
+        return self.item
+
+    def getNext(self):
+        return self.next
+
+    def setItem(self, item):
+        self.item = item
+
+    def setNext(self, next):
+        self.next = next
+```
+
+In the Node class there are two pieces of information: the item is a reference to a value in the list, and the next reference which points to the next node in the sequence.
+
+```Python
+class LinkedList:
+    # This class is used internally by the LinkedList class. It is
+    # invisible from outside this class due to the two underscores
+    # that precede the class name. Python mangles names so that they
+    # are not recognizable outside the class when two underscores
+    # precede a name but aren’t followed by two underscores at the
+    # end of the name (i.e. an operator name).
+    class __Node:
+        def __init__(self, item, next=None):
+            self.item = item
+            self.next = next
+
+        def getItem(self):
+            return self.item
+
+        def getNext(self):
+            return self.next
+
+        def setItem(self, item):
+            self.item = item
+
+        def setNext(self, next):
+            self.next = next
+
+    def __init__(self, contents=[]):
+        # Here we keep a reference to the first node in the linked list
+        # and the last item in the linked list. They both point to a
+        # dummy node to begin with. This dummy node will always be in
+        # the first position in the list and will never contain an item.
+        # Its purpose is to eliminate special cases in the code below.
+        self.first = LinkedList.__Node(None, None)
+        self.last = self.first
+        self.numItems = 0
+
+        for e in contents:
+            self.append(e)
+
+        def __getitem__(self, index):
+            if index >= 0 and index < self.numItems:
+                cursor = self.first.getNext()
+                for i in range(index):
+                    cursor = cursor.getNext()
+            
+            return cursor.getItem()
+
+        raise IndexError("LinkedList index out of range")
+
+        def __setitem__(self, index, val):
+            if index >= 0 and index < self.numItems:
+                cursor = self.first.getNext()
+                for i in range(index):
+                    cursor = cursor.getNext()
+
+                cursor.setItem(val)
+                return
+
+            raise IndexError("LinkedList assignment index out of range")
+
+        def __add__(self,other):
+            if type(self) != type(other):
+                raise TypeError("Concatenate undefined for " + \
+                    str(type(self)) + " + " + str(type(other)))
+
+            result = LinkedList()
+            cursor = self.first.getNext()
+
+            while cursor != None:
+                result.append(cursor.getItem())
+                cursor = cursor.getNext()
+
+            cursor = other.first.getNext()
+
+            while cursor != None:
+                result.append(cursor.getItem())
+                cursor = cursor.getNext()
+
+            return result
+
+        def append(self,item):
+            node = LinkedList.__Node(item)
+            self.last.setNext(node)
+            self.last = node
+            self.numItems += 1
+
+        def insert(self,index,item):
+            cursor = self.first
+
+            if index < self.numItems:
+                for i in range(index):
+                    cursor = cursor.getNext()
+
+                node = LinkedList.__Node(item, cursor.getNext())
+                cursor.setNext(node)
+                self.numItems += 1
+            else:
+                self.append(item)
+```
+
+| Operation | Complexity | Usage | Method |
+| :--: | :--: | :--: | :--: |
+| List creation | O(len(y)) | x = LinkedList(y) | calls \_\_init\_\_(y) |
+| indexed get | O(n) | a = x[i] | x.\_\_getitem\_\_(i) |
+| indexed set | O(n) | x[i] = a | x.\_\_setitem\_\_(i,a) |
+| concatenate | O(n) | z=x+y | z = x.\_\_add\_\_(y) |
+| append | O(1) | x.append(a) | x.append(a) |
+| insert | O(n) | x.insert(i,e) | x.insert(i,e)) |
+| delete | O(n) | del x[i] | x.\_\_delitem\_\_(i) |
+| equality | O(n) | x == y | x.\_\_eq\_\_(y) |
+| iterate | O(n) | for a in x: | x.\_\_iter\_\_() |
+| length | O(1) | len(x) | x.\_\_len\_\_() |
+| membership | O(n) | a in x | x.\_\_contains\_\_(a) |
+| sort | N/A | N/A | N/A |
 
 
