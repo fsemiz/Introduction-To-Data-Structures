@@ -145,7 +145,7 @@ Following picture represents array myList. Here, myList holds ten double values 
 
 #### Lists in Python Programming Language
 
-A list in Python is a collection of items which can contain elements of multiple data types, which may be either numeric, character logical values, etc. It is an ordered collection supporting negative indexing. A list can be created using [] containing data values.
+A list in Python is a collection of items which can contain elements of multiple data types, which may be either numeric, character logical values, etc. It is an ordered collection supporting negative indexing. A list can be created using [] containing data values. 
 
 Contents of lists can be easily merged and copied using python’s inbuilt functions.
 
@@ -177,6 +177,16 @@ Each of the operations in the table has an associated complexity.
 The performance of an algorithm depends on the complexity of the operations used in implementing that algorithm. 
 
 The indexed get and indexed set operations can be observed to have O(1) complexity. This complexity is achieved because the memory of a computer is randomly accessible, which is why it is called Random Access Memory.
+
+**Additional Information:**
+
+Python's List is a dynamic array. This is implementation dependent for each Python Interpreter:
+
+- CPython uses an array of pointers
+- Jython uses an ArrayList
+- IronPython also uses an array. 
+
+You can browse the source code to find out. Thus they all have O(1) random access.
 
 #### Arrays in Python Programming Language
 
