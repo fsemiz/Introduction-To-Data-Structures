@@ -39,7 +39,7 @@ To put it briefly, data structures are containers used to store data. However, e
 
 In computer science, an array data structure, or simply an array, is a data structure consisting of a collection of elements (values or variables), each identified by at least one array index or key. An array is stored such that the position of each element can be computed from its index tuple by a mathematical formula. The simplest type of data structure is a linear array, also called one-dimensional array. 
 
-The key point about an array is we have constant time access to read and write.
+The key point about an array is we have constant time access to read and write, O(1) operation.
 
     constant_time_access = array_addr + element_size x (i - first_index)
 
@@ -143,35 +143,6 @@ Following picture represents array myList. Here, myList holds ten double values 
 |:--:|
 | *Retrieved from https://www.tutorialspoint.com/java/java_arrays.htm* |
 
-#### Arrays in Python Programming Language
-
-An array is a vector containing homogeneous elements i.e. belonging to the same data type. Elements are allocated with contiguous memory locations allowing easy modification, that is, addition, deletion, accessing of elements. 
-
-In Python, we have to use the array module to declare arrays. If the elements of an array belong to different data types, an exception “Incompatible data types” is thrown.
-
-Python’s array module provides space-efficient storage of basic C-style data types like bytes, 32-bit integers, floating point numbers, and so on.
-
-Arrays created with the **array.array class** are **mutable** and behave similarly to lists, except for one important difference — they are “**typed arrays**” constrained to a single data type.
-
-Because of this constraint, array.array objects with many elements are more space-efficient than lists and tuples. The elements stored in them are tightly packed, and this can be useful if we need to store many elements of the same type.
-
-Also, arrays support many of the same methods as regular lists, and we might be able to use them as a “drop-in replacement” without requiring other changes to our application code.
-
-```Python
->>> import array
->>> arr = array.array('i', (22, 30, 10, 6))
->>> arr[1]
-30 # Arrays are mutable
->>> arr[1] = 25
->>> arr
-array('i', [22, 25, 10, 6])
->>> arr.append(27)
->>> arr
-array('i', [22, 25, 10, 6, 27]) # Arrays are typed
->>> arr[1] = "Sarah"
-TypeError: an integer is required (got type str)
-```
-
 #### Lists in Python Programming Language
 
 A list in Python is a collection of items which can contain elements of multiple data types, which may be either numeric, character logical values, etc. It is an ordered collection supporting negative indexing. A list can be created using [] containing data values.
@@ -207,6 +178,93 @@ The performance of an algorithm depends on the complexity of the operations used
 
 The indexed get and indexed set operations can be observed to have O(1) complexity. This complexity is achieved because the memory of a computer is randomly accessible, which is why it is called Random Access Memory.
 
+#### Arrays in Python Programming Language
+
+An array is a vector containing homogeneous elements i.e. belonging to the same data type. Elements are allocated with contiguous memory locations allowing easy modification, that is, addition, deletion, accessing of elements. 
+
+In Python, we have to use the array module to declare arrays. If the elements of an array belong to different data types, an exception “Incompatible data types” is thrown.
+
+Python’s array module provides space-efficient storage of basic C-style data types like bytes, 32-bit integers, floating point numbers, and so on.
+
+Arrays created with the **array.array class** are **mutable** and behave similarly to lists, except for one important difference — they are “**typed arrays**” constrained to a single data type.
+
+Because of this constraint, array.array objects with many elements are more space-efficient than lists and tuples. The elements stored in them are tightly packed, and this can be useful if we need to store many elements of the same type.
+
+Also, arrays support many of the same methods as regular lists, and we might be able to use them as a “drop-in replacement” without requiring other changes to our application code.
+
+```Python
+>>> import array
+>>> arr = array.array('i', (22, 30, 10, 6))
+>>> arr[1]
+30 # Arrays are mutable
+>>> arr[1] = 25
+>>> arr
+array('i', [22, 25, 10, 6])
+>>> arr.append(27)
+>>> arr
+array('i', [22, 25, 10, 6, 27]) # Arrays are typed
+>>> arr[1] = "Sarah"
+TypeError: an integer is required (got type str)
+```
+
+#### NumPy (Numerical Python) Arrays in Python Programming Language
+
+The NumPy (Numerical Python) library first appeared in 2006 and is the preferred Python array implementation. 
+
+**It offers a high-performance, richly functional n-dimensional array type called ndarray**, which from this point forward we’ll refer to by its synonym, array.
+
+**Operations on array s are up to two orders of magnitude faster than those on lists.**
+
+In a big-data world in which applications may do massive amounts of processing on vast amounts of array-based data, this performance advantage can be critical.
+
+A strength of NumPy is “array-oriented programming,” which uses functional-style programming with internal iteration to make array manipulations concise and straightforward, eliminating the kinds of bugs that can occur with the external iteration of explicitly programmed loops.
+
+The NumPy documentation recommends importing the numpy module as np so that you can access its members with "**np.**":
+
+```Python
+>>> import numpy as np
+
+>>> numbers = np.array([2, 3, 5, 7, 11])
+>>> numbers = np.array([x for x in range(2, 21, 2)])
+>>> numbers = np.array([[2, 4, 6, 8, 10], [1, 3, 5, 7, 9]])
+```
+
+#### List vs. Array Performance in Python Programming Language
+
+**Most array operations execute significantly faster than corresponding list operations.**
+
+To demonstrate, we’ll use the **IPython %timeit** **magic command**, which times the average duration of operations. Note that the times displayed on your system may vary from what we show here.
+
+**Timing the Creation of a List Containing Results of 6,000,000 Die Rolls:**
+
+```Python
+>>> import random
+
+>>> %timeit rolls_list = [random.randrange(1, 7) for i in range(0, 6_000_000)]
+
+6.29 s ± 119 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+```
+
+By default, %timeit executes a statement in a loop, and it runs the loop seven times. If you do not indicate the number of loops, %timeit chooses an appropriate value. 
+
+In our testing, operations that on average took more than 500 milliseconds iterated only once, and operations that took fewer than 500 milliseconds iterated 10 times or more. After executing the statement, %timeit displays the statement’s average execution time, as well as the standard deviation of all the executions. On average, %timeit indicates that it took 6.29 seconds ( s ) to create the list with a standard deviation of 119 milliseconds ( ms ). In total, the preceding snippet took about 44 seconds to run the snippet seven times.
+
+**Timing the Creation of an array Containing Results of 6,000,000 Die Rolls:**
+
+Now, let’s use the randint function from the numpy.random module to create an array of 6,000,000 die rolls.
+
+```Python
+>>> import numpy as np
+
+>>> %timeit rolls_array = np.random.randint(1, 7, 6_000_000)
+
+72.4 ms ± 635 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+```
+
+On average, %timeit indicates that it took only 72.4 milliseconds with a standard deviation of 635 microseconds ( μs ) to create the array. 
+
+**In total, the preceding snippet took just under half a second to execute on our computer—about 1/100th of the time snippet took to execute. The operation is two orders of magnitude faster with array!**
+
 #### Differences Between Arrays and Lists in Python
 
 Now that we know their definitions and features, we can talk about the differences between lists and arrays in Python:
@@ -225,6 +283,76 @@ So, when should you use a list and when should you use an array?
 
 - If you plan to do any numerical operations with your combination of items, use an array. Data analytics and data science rely heavily on (mostly NumPy) arrays.
 
+#### pandas Series and DataFrames in Python Programming Language
+
+NumPy’s array is optimized for homogeneous numeric data that’s accessed via integer indices. 
+
+**Data science presents unique demands for which more customized data structures are required. Big data applications must support mixed data types, customized indexing, missing data, data that’s not structured consistently and data that needs to be manipulated into forms appropriate for the databases and data analysis packages you use.**
+
+Pandas is the most popular library for dealing with such data. It provides two key collections: Series for one-dimensional collections and DataFrame's for two-dimensional collections. You can use pandas’ MultiIndex to manipulate multi-dimensional data in the context of Series and DataFrame's.
+
+**Wes McKinney** created pandas in **2008** while working in industry. The name **pandas** is derived from the term “**panel data**”, which is data for measurements over time, such as stock prices or historical temperature readings. McKinney needed a library in which the same data structures could handle both time- and non-time-based data with support for data alignment, missing data, common database-style data manipulations, and more.
+
+##### pandas Series
+
+**A Series is an enhanced one-dimensional array. Whereas arrays use only zero-based integer indices, Series support custom indexing, including even non-integer indices like strings.** 
+
+```Python
+>>> import pandas as pd
+
+>>> grades = pd.Series([87, 100, 94])
+>>> grades
+0     87
+1    100
+2     94
+dtype: int64
+
+>>> pd.Series([87, 100, 94], index=['Wally', 'Eva', 'Sam'])
+Wally     87
+Eva      100
+Sam       94
+dtype: int64
+
+>>> pd.Series({'Wally': 87, 'Eva': 100, 'Sam': 94})
+Wally     87
+Eva      100
+Sam       94
+dtype: int64
+
+>>> pd.Series([1, 2, None, 'kaan'])
+0       1
+1       2
+2    None
+3    kaan
+dtype: object
+
+```
+
+##### pandas DataFrames
+
+DataFrame is an enhanced two-dimensional array . Like Series, DataFrames can have custom row and column indices, and offer additional operations and capabilities that make them more convenient for many data-science oriented tasks. 
+
+DataFrames also support missing data. Each column in a DataFrame is a Series. The Series representing each column may contain different element types.
+
+```Python
+>>> import pandas as pd
+
+>>> grades_dict = {'Wally': [87, 96, 70], 'Eva': [100, 87, 90],
+    ...: 'Sam': [94, 77, 90], 'Katie': [100, 81, 82],
+    ...: 'Bob': [83, 65, 85]}
+>>> grades = pd.DataFrame(grades_dict)
+>>> grades
+   Wally  Eva  Sam  Katie  Bob
+0     87  100   94    100   83
+1     96   87   77     81   65
+2     70   90   90     82   85
+>>> grades.index = ['Test1', 'Test2', 'Test3']
+>>> grades
+       Wally  Eva  Sam  Katie  Bob
+Test1     87  100   94    100   83
+Test2     96   87   77     81   65
+Test3     70   90   90     82   85
+```
 
 ### Linked Lists
 
