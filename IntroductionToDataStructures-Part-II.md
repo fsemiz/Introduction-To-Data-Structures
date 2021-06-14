@@ -18,17 +18,13 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 - Grokking Algorithms - Aditya Y. Bhargava
 - Wikipedia - www.wikipedia.com
 
-## Introduction
-To solve a problem in the world of computer science and normal life, we must first make a plan and determine the solution steps. This can be likened to looking at a recipe before cooking. To make a computer perform a task, we need to provide more details. Technically speaking an algorithm can be defined as the following: "Finite sequence of instructions to perform a specific task in a finite amount of time". The basis of creating a good algorithm for many problems lies in storing the data to be used appropriately and efficiently. By saying efficient we generally talk about **accessing**, **insertion**, **deletion**, **searching**, and **sorting** the data. These operations complexities are directly related to which container is used to store that data.
+### Hash Tables
+Many applications require a dictionary like data structure which supports only the dictionary operations INSERT, SEARCH, and DELETE. Creating a specisific data structure for these kind of operations can speed up the algorithms a lot.
 
-| <img src="./images/Algorithm.jpg" alt="Algorithm" style="zoom:50%;" /> |
+| <img src="./images/hash_tables_intro.png" alt="Algorithm" style="zoom:50%;" /> |
 |:--:|
-| *Retrieved from https://www.techidence.com/whats-an-algorithm-understand-how-it-works-in-apps-and-websites/* |
+| *Retrieved from Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.)* |
 
-To put it briefly, data structures are containers used to store data. However, each data structure is generally built to store a certain type of data. A data structure may be efficient in some operations but inefficient in other operations, and this is often the case. For this reason, we must choose data structures in accordance with the data at hand. For example, if you try to drink a soup with a fork, it will take you quite a while to finish it. However, if you use a spoon for soup and a fork for pasta, you will see that you can eat both fast this time. The purpose of this session will be to go over the topics of data structures as well as to remind you where and what type of data structures are used in which situation.
-
-| <img src="./images/SoupWithFork.jpg" alt="Soup with fork" style="zoom:67%;" /> |
-| :----------------------------------------------------------: |
-| *Retrieved from https://www.linkedin.com/pulse/eating-soup-forks-michael-henderson/* |
+Actually the example shown is an example of an direct access table.
 
 
