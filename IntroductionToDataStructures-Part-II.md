@@ -19,7 +19,7 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 - Wikipedia - www.wikipedia.com
 
 ### Hash Tables
-    Hash Table: A data structure that implements a type of array that can map keys to values.  It uses a hash function to compute an index, into an array of slots, from which the desired value can be found.
+    Hash Table: Implements a type of array that can map keys to values.  It uses a hash function to compute an index, into an array of slots, from which the desired value can be found.
 Many applications require a dictionary like data structure which supports only the dictionary operations INSERT, SEARCH, and DELETE. Creating a specisific data structure for these kind of operations can speed up the algorithms a lot.
 
 | <img src="./images/hash_tables_intro.png" alt="Algorithm" style="zoom:50%;" /> |
