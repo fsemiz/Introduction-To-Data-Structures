@@ -20,7 +20,7 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 
 ### Hash Tables
     Hash Table: A hash table is a data structure that is used to store keys/value pairs.
-A hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index, also called a hash code, into an array of buckets or slots, from which the desired value can be found. A hash table generalizes the idea of an simple array in which we can access an ordinary elements position in O(1) time. If number of keys stored is small compared to total number of keys then it is effective to use an hash table.
+A hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index, also called a hash code, into an array of buckets or slots, from which the desired value can be found. A hash table generalizes the idea of an simple array in which we can access an ordinary elements position in O(1) time. If number of keys stored is small compared to total number of keys then it is effective to use an hash table. One idea that hash tables use is to compute the key from the index instead of directly using the key.
 
 | <img src="./images/hash_tables_intro.png" alt="Algorithm" style="zoom:50%;" /> |
 |:--:|
