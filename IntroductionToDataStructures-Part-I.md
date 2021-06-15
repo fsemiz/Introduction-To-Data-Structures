@@ -28,7 +28,7 @@ To solve a problem in the world of computer science and normal life, we must fir
 To put it briefly, data structures are containers used to store data. However, each data structure is generally built to store a certain type of data. A data structure may be efficient in some operations but inefficient in other operations, and this is often the case. For this reason, we must choose data structures in accordance with the data at hand. For example, if you try to drink a soup with a fork, it will take you quite a while to finish it. However, if you use a spoon for soup and a fork for pasta, you will see that you can eat both fast this time. The purpose of this session will be to go over the topics of data structures as well as to remind you where and what type of data structures are used in which situation.
 
 | <img src="./images/SoupWithFork.jpg" alt="Soup with fork" style="zoom:67%;" /> |
-| :----------------------------------------------------------: |
+| :--: |
 | *Retrieved from https://www.linkedin.com/pulse/eating-soup-forks-michael-henderson/* |
 
 ## Basic Data Structures: Arrays and Linked Lists
@@ -958,6 +958,8 @@ class LinkedList:
             self.append(item)
 ```
 
+##### Running Times for Implemented Singly-Linked List in Python Programming Language
+
 | Operation | Complexity | Usage | Method |
 | :--: | :--: | :--: | :--: |
 | List creation | O(len(y)) | x = LinkedList(y) | calls \_\_init\_\_(y) |
@@ -973,11 +975,263 @@ class LinkedList:
 | membership | O(n) | a in x | x.\_\_contains\_\_(a) |
 | sort | N/A | N/A | N/A |
 
-<!-- Ordered vs Unordered Data Structures -->
+## Elementary Data Structures
 
+### Stacks
 
-<!-- Stacks -->
+**A stack is a data structure where access is only at one end of the sequence. New values are pushed onto the stack to add them to the sequence and popped off the stack to remove them from the sequence.**
 
+**Stacks are called Last In/First Out or LIFO data structures. The last item pushed is the first item popped. A Stack class can be implemented in at least a couple different ways to achieve the computation complexities outlined in this table. Either a list or a linked list will suffice.**
 
-<!-- Queues -->
+#### Running Time Complexity of Stack Operations
+
+| Operation | Complexity | Usage | Description |
+| :--: | :--: | :--: | :--: |
+| Stack Creation | O(1) | s=Stack() | calls the constructor |
+| pop | O(1) | a=s.pop() | returns the last item pushed and removes it from s |
+| push | O(1) | s.push(a) | pushes the item, a, on the stack, s |
+| top | O(1) | a=s.top() | returns the top item without popping s |
+| isEmpty | O(1) | s.isEmpty() | returns True if s has no pushed items |
+
+#### Implementing a Stack in Python Programming Language
+
+**The code below is an implementation of a stack with a list. The implementation is pretty straight-forward.**
+
+```Python
+class Stack:
+
+    def __init__(self):
+        self.items = []
+
+    def pop(self):
+        if self.isEmpty():
+            raise RuntimeError("Attempt to pop an empty stack")
+
+        topIdx = len(self.items)-1
+        item = self.items[topIdx]
+        del self.items[topIdx]
+
+        return item
+
+    def push(self,item):
+        self.items.append(item)
+
+    def top(self):
+        if self.isEmpty():
+            raise RuntimeError("Attempt to get top of empty stack")
+
+        topIdx = len(self.items)-1
+
+        return self.items[topIdx]
+    
+    def isEmpty(self):
+        return len(self.items) == 0
+
+```
+
+The main program implemented below tests the stack datatype with a couple tests to make sure the code operates correctly.
+
+```Python
+def main():
+
+    s = Stack()
+    lst = list(range(10))
+    lst2 = []
+
+    for k in lst:
+        s.push(k)
+
+    if s.top() == 9:
+        print("Test 1 Passed")
+    else:
+        print("Test 1 Failed")
+
+    while not s.isEmpty():
+        lst2.append(s.pop())
+
+    lst2.reverse()
+
+    if lst2 != lst:
+        print("Test 2 Failed")
+    else:
+        print("Test 2 Passed")
+    
+    try:
+        s.pop()
+        print("Test 3 Failed")
+    except RuntimeError:
+        print("Test 3 Passed")
+    except:
+        print("Test 3 Failed")
+
+    try:
+        s.top()
+        print("Test 4 Failed")
+    except RuntimeError:
+        print("Test 4 Passed")
+    except:
+        print("Test 4 Failed")
+    
+```
+
+### Queues
+
+**In a queue, the element deleted is always the one that has been in the set for the longest time: the queue implements a ﬁrst-in, ﬁrst-out, or FIFO, policy.**
+
+**A queue is like a stack in many ways except that instead of being a LIFO data structure, queues are FIFO or First In/First Out data structures. The first item pushed, is the first item popped. When we are working with a queue we talk of enqueueing an item, instead of pushing it. When removing an item from the queue we talk of dequeueing the item instead of popping it as we did from a stack.*
+
+#### Running Time Complexity of Queue Operations
+
+| Operation | Complexity | Usage | Description |
+| :--: | :--: | :--: | :--: |
+| Queue Creation | O(1) | q=Queue() | calls the constructor |
+| dequeue | O(1) | a=q.dequeue() | returns the first item enqueued and removes it from q |
+| enqueue | O(1) | q.enqueue(a) | enqueues the item, a, on the queue, q |
+| front | O(1) | a=q.front() | returns the front item without dequeueing the item |
+| isEmpty | O(1) | q.isEmpty() | returns True if q has not enqueued items |
+
+#### Implementing a Queue in Python Programming Language
+
+Implementing a queue with the complexities given in this table is a bit trickier than implementing the stack. To implement a queue with these complexities we need to be able to add to one end of a sequence and remove from the other end of the sequence in O(1) time. This suggests the use of a linked list. 
+
+Certainly, a linked list would work to get the desired complexities. However, we can still use a list if we are willing to accept an amortized complexity of O(1) for the dequeue operation.
+
+This Queue class code implements a queue with a list and achieves an amortized complexity of O(1) for the dequeue operation.
+
+```Python
+class Queue:
+    def __init__(self):
+        self.items = []
+        self.frontIdx = 0
+    
+    def __compress(self):
+        newlst = []
+
+        for i in range(self.frontIdx,len(self.items)):
+            newlst.append(self.items[i])
+
+        self.items = newlst
+        self.frontIdx = 0
+
+    def dequeue(self):
+        if self.isEmpty():
+            raise RuntimeError("Attempt to dequeue an empty queue")
+
+        # When queue is half full, compress it. This
+        # achieves an amortized complexity of O(1) while
+        # not letting the list continue to grow unchecked.
+        if self.frontIdx * 2 > len(self.items):
+            self.__compress()
+
+        item = self.items[self.frontIdx]
+        self.frontIdx += 1
+        
+        return item
+
+    def enqueue(self,item):
+        self.items.append(item)
+
+    def front(self):
+        if self.isEmpty():
+            raise RuntimeError("Attempt to access front of empty queue")
+
+        return self.items[self.frontIdx]
+
+    def isEmpty(self):
+        return self.frontIdx == len(self.items)
+
+```
+
+The main program implemented below tests the queue datatype with a couple tests to make sure the code operates correctly.
+
+```Python
+def main():
+    q = Queue()
+    lst = list(range(10))
+    lst2 = []
+
+    for k in lst:
+        q.enqueue(k)
+
+    if q.front() == 0:
+        print("Test 1 Passed")
+    else:
+        print("Test 1 Failed")
+
+    while not q.isEmpty():
+        lst2.append(q.dequeue())
+
+    if lst2 != lst:
+        print("Test 2 Failed")
+    else:
+        print("Test 2 Passed")
+    
+    for k in lst:
+        q.enqueue(k)
+
+    lst2 = []
+
+    while not q.isEmpty():
+        lst2.append(q.dequeue())
+
+    if lst2 != lst:
+        print("Test 3 Failed")
+    else:
+        print("Test 3 Passed")
+
+    try:
+        q.dequeue()
+        print("Test 4 Failed")
+    except RuntimeError:
+        print("Test 4 Passed")
+    except:
+        print("Test 4 Failed")
+
+    try:
+        q.front()
+        print("Test 5 Failed")
+    except RuntimeError:
+        print("Test 5 Passed")
+    except:
+        print("Test 5 Failed")
+
+```
+
+## Brief Introduction to Ordered vs Unordered Data Structures in Python Programming Language
+
+**In Python, lists, strings, tuples and dictionaries are ordered collection of objects, and sets are unordered collection of objects.**
+
+If we look at the output for strings, lists, tuples and dictionary, they are in same order as they are specified initially. And these data structures guarantee this order. So strings, lists, tuples and dictionaries are ordered collections of objects.
+
+If we look at the result of sets, initial order, the order in which we specified the elements, is not maintained. So sets are unordered collections of objects.
+
+### Python 3.7 
+
+For the previous versions, Python lists are ordered and dicts are not. Well, not anymore. Quoting the docs referenced above:
+
+    **Changed in version 3.7: Dictionary order is guaranteed to be insertion order. This behavior was an implementation detail of CPython from 3.6.**
+
+So if you want to discuss fundamental differences you can pretty much only point out that dict values are accessible by keys, which could be of any immutable type, while list values are indexed with integers.
+
+For more information: https://docs.python.org/3.7/library/stdtypes.html#dict
+
+### How? and Why?
+
+A plain hash table holds both keys and values in a pseudo random order determined by hashes calculated from keys. It is also sparse, with unoccupied holes in a pre-allocated array:
+
+| ![Hash Table](./images/python-dict-hash-table.png) |
+|:--:|
+| *Retrieved from https://softwaremaniacs.org/blog/2020/02/05/dicts-ordered/* |
+
+Since version 3.6 CPython holds keys and values in a separate dense array, while the hash table itself only holds indexes into that:
+
+| ![Hash Entries](./images/python-dict-hash-entries.png) |
+|:--:|
+| *Retrieved from https://softwaremaniacs.org/blog/2020/02/05/dicts-ordered/* |
+
+Since the entries array is populated sequentially, it naturally ensures the order.
+
+The initial reason for this change was saving space by sharing hash tables of multiple dicts with the same set of keys (which in Python means instances of the same class, for example).
+
+**But not sets though! Sets are still unordered!**
 
