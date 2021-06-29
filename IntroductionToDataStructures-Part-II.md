@@ -13,19 +13,274 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 **Resources:**
 
 - Introduction to Algorithms - Cormen, Leiserson, Rivest, Stein
-- Algorithms - Sanjoy Dasgupta, Christos Papadimitriou, Umesh Vazirani
-- Data Structures and Algorithms with Python - Kent D. Lee, Steve Hubbard
+- Hash Tables - Yusuf Sahillioğlu (PowePoint Slides)
+- Algorithms - Robert Sedgewick, Kevin Wayne
 - Grokking Algorithms - Aditya Y. Bhargava
+- Hash Tables & Functions - Mark Redekopp, David Kempe, Sandra Batista
+- Data Structures and Algorithms in Java - Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser.
 - Wikipedia - www.wikipedia.com
 
 ### Hash Tables
-    Hash Table: A hash table is a data structure that is used to store keys/value pairs.
+    Hash Table: A hash table is a data structure that implements an associative array abstract data type, a structure that can map keys to values.
+    
+| <img src="./images/hash_tables_intro.png" alt="Algorithm"  width="700" /> |
+|:--:|
+| *This example shows why we need hash tables* |
+    
 A hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index, also called a hash code, into an array of buckets or slots, from which the desired value can be found. A hash table generalizes the idea of an simple array in which we can access an ordinary elements position in O(1) time. If number of keys stored is small compared to total number of keys then it is effective to use an hash table. One idea that hash tables use is to compute the key from the index instead of directly using the key.
 
-| <img src="./images/hash_tables_intro.png" alt="Algorithm" style="zoom:50%;" /> |
-|:--:|
-| *Retrieved from Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.)* |
+An array maps integers to values
++ Given i , [i] returns the value in O(1)
 
-Actually the example shown is an example of an direct access table.
+Dictionaries map keys to values
++ Given key, k, map[k] returns the associated value
+
+| <img src="./images/array vs dictionary.png" alt="ArrayVsDict"  width="700" /> |
+|:--:|
+| *Array vs Dictionary* |
+
+Can we use non integer keys but still use an array?
+What if we just convert the non integer key to an integer.
+
+**For now, make the unrealistic assumption that each unique key converts to a unique integer. This is the idea behind a hash table.
+The conversion function is known as a hash function, h(k) It should be fast/easy to compute (i.e. O(1) )**
+
+    Instead of using the key as an array index directly, the array index is computed from the key.
+
+| <img src="./images/array_to_hash_table.png" alt="ArrayToHash"  width="400" /> |
+|:--:|
+| *Array to dictionary conversion* |
+
+Although searching for an element in a hash table can take as long as searching for an element in a
+linked list—O(n) time in the worst case—in practice, hashing performs extremely well. 
+
+    Under reasonable assumptions, the average time to search for an element in a hash table is O(1).
+
+**How to implement hast tables ?**
+
+1. *First idea ? A hash table can be implemented with a balanced BST.*
+
+| <img src="./images/hash_table_bst.png" alt="HashTableBst"  width="600" /> |
+|:--:|
+| *Hash table implementation with a BST* |
+
+A dictionary/map can be implemented with a balanced BST
+- Insert, Find, Remove = O(log2n)
+
+Can we do better?
+- Hash tables (unordered maps) offer the promise of O(1) access time
+
+2. *Second idea, Direct Access Table*
+
+How to implement a dynamic set by a direct-address table T . Each key in the universe U = {0,1, ..., 9} corresponds to an index in the table. The set K = {2, 3, 5, 8} of actual keys determines the slots in the table that contain pointers to elements. The other slots, heavily shaded, contain NIL.
+
+| <img src="./images/direct_access_table.png" alt="DirectAccessTable"  width="600" /> |
+|:--:|
+| *A direct access table* |
+
+The downside of direct addressing is obvious: if the universe U is large, storing a table T of size |U| may be impractical, or even impossible, given the memory available on a typical computer.
+
+Furthermore, the set K of keys actually stored may be so small relative to U that most of the space allocated for T would be wasted.
+
+3. *Hash Table*
+
+When the set K of keys stored in a dictionary is much smaller than the universe U of all possible keys, a hash table requires much less storage than a direct address table. Specifically, we can reduce the storage requirement to ‚ |K| while we maintain the benefit that searching for an element in the hash table still requires only O(1) time (on average).
+
+| <img src="./images/hash_table.png" alt="HashTable"  width="600" /> |
+|:--:|
+| *Hash Table* |
+
+With direct addressing, an element with key k is stored in slot k. With hashing, this element is stored in slot h(k); that is, we use a hash function h to compute the slot from the key k. Here, h maps the universe U of keys into the slots of a hash table T=[0.. m-1].
+
+*Direct Access Table (timing always good, space terrible) vs. Hash Table (timing good on average, space always good).*
+
+**Hash Function:**
+
+h: U -> {0,1, ... , m-1}, where the size m of the hash table is typically much less than |U|. We say that an element with key k hashes to slot h(k); we also say that h(k) is the hash value of key k.
+
+The hash function:
+- must be simple to compute.
+- must distribute the keys evenly among the cells.
+
+If we know which keys will occur in advance we can write perfect hash functions, **but we don’t**.
+
+**Types of Hash Functions**
+
+**Positive integers:** The most commonly used method for hashing integers is called modular hashing: we choose the array size M to be prime, and, for any positive integer key k, compute the remainder when dividing k by M. This function is very easy to compute (k % M, in Java), and is effective in dispersing the keys evenly between 0 and M-1.
+
+**Floating-point numbers:** If the keys are real numbers between 0 and 1, we might just multiply by M and round off to the nearest integer to get an index between 0 and M-1. Although it is intuitive, this approach is defective because it gives more weight to the most significant bits of the keys; the least significant bits play no role. One way to address this situation is to use modular hashing on the binary representation of the key (this is what Java does).
+
+**Strings:** Modular hashing works for long keys such as strings, too: we simply treat them as huge integers. For example, the code below computes a modular hash function for a String s, where R is a small prime integer (Java uses 31).
+
+```Java
+int hash = 0;
+for (int i = 0; i < s.length(); i++)
+    hash = (R * hash + s.charAt(i)) % M;
+```
+
+**Compound keys:** If the key type has multiple integer fields, we can typically mix them together in the way just described for String values. For example, suppose that search keys are of type USPhoneNumber, which has three integer fields area (3-digit area code), exch (3-digit exchange), and ext (4-digit extension). In this case, we can compute the number
+
+```Java
+int hash = (((area * R + exch) % M) * R + ext) % M; 
+```
+**Java conventions:** Java helps us address the basic problem that every type of data needs a hash function by requiring that every data type must implement a method called hashCode() (which returns a 32-bit integer). The implementation of hashCode() for an object must be consistent with equals. That is, if a.equals(b) is true, then a.hashCode() must have the same numerical value as b.hashCode(). If the hashCode() values are the same, the objects may or may not be equal, and we must use equals() to decide which condition holds.
+
+Converting a hashCode() to an array index. Since our goal is an array index, not a 32-bit integer, we combine hashCode() with modular hashing in our implementations to produce integers between 0 and M-1 as follows:
+
+```Java
+private int hash(Key key) {
+    return (key.hashCode() & 0x7fffffff) % M;
+}
+```
+
+The code masks off the sign bit (to turn the 32-bit integer into a 31-bit nonnegative integer) and then computing the remainder when dividing by M, as in modular hashing.
+
+**User-defined hashCode():** Client code expects that hashCode() disperses the keys uniformly among the possible 32-bit result values. That is, for any object x, you can write x.hashCode() and, in principle, expect to get any one of the 2^32 possible 32-bit values with equal likelihood. Java provides hashCode() implementations that aspire to this functionality for many common types (including String, Integer, Double, Date, and URL), but for your own type, you have to try to do it on your own. Program PhoneNumber.java illustrates one way to proceed: make integers from the instance variables and use modular hashing. Program Transaction.java illustrates an even simpler approach: use the hashCode() method for the instance variables to convert each to a 32-bit int value and then do the arithmetic. 
+
+We have three primary requirements in implementing a good hash function for a given data type:
+- It should be deterministic—equal keys must produce the same hash value.
+- It should be efficient to compute.
+- It should uniformly distribute the keys.
+
+**Analysis**
+
+| <img src="./images/collision.png" alt="Collision"  width="400" /> |
+|:--:|
+| *An example of a collision - retrieved from: https://commons.wikimedia.org/wiki/File:Hash_table_5_0_1_1_1_1_0_SP.svg* |
+
+Let; *n = number of entries (i.e. keys), m = size of the hash table*
+
+If **n > m** , is every entry in the table used ?
+- No. Some may be blank?
+
+Is it possible we haven't had a collision?
+- No. Some entries have hashed to the same location
+
+Pigeon Hole Principle says given n items to be slotted into m holes and **n > m** there is at least one hole with more than 1 item
+- So if **n > m** , we know we've had a collision
+- We can only avoid a collision when **n < m**
+
+**Resolving Collisions**
+- Collisions occur when two keys, k<sub>1</sub> and k<sub>2</sub>, are not equal, but h(k<sub>1</sub>) = h(k<sub>2</sub>).
+- Collisions are inevitable if the number of entries, n , is greater than table size, m by pigeonhole principle
+- Methods
+    - Closed Addressing (e.g. buckets or chaining
+    - Open addressing (aka probing)
+       - Linear Probing
+       - Quadratic Probing
+       - Double hashing
+
+**Seperate Chaining**
+
+    The idea is to keep a list of all elements that hash to the same value. 
+
+The array elements are  pointers to the first nodes of the lists.  A new item is inserted to the front of the list.  
+
+|<img align="right" src="./images/seperate_chaining.png">|
+|:--:|
+| *Seperate Chaining* |
+
+*Advantages:*
+- Better space utilization for large items.
+- Simple collision handling: searching linked list.
+- Overflow: we can store more items than the hash table size.
+- Deletion is quick and easy: deletion from the linked list
+
+**Operations**
+
+- **Initialization:** all entries are set to NULL
+- **Find:**  locate the cell using hash function. sequential search on the linked list in that cell.
+- **Insertion:**  Locate the cell using hash function. (If the item does not exist) insert it as the first item in the list.
+- **Deletion:** Locate the cell using hash function. Delete the item from the linked list.
+
+**Analysis of Seperate Chaining**
+
+- Collisions are very likely.
+   - How likely and what is the average length of lists?
+- Load factor l definition:
+   - Ratio of number of elements (N) in a hash table to the hash TableSize. i.e.,    l = N/TableSize
+– The average length of a list/chain is also l.
+- For chaining l is not bound by 1; it can be > 1
+- Cost = Constant time to evaluate the hash function + time to traverse the list = constant time + expected chain length
+				      = O(1 + l).
+
+*Unsuccessful search:*
+We have to traverse the entire list, so we need to compare l nodes on the average.
+
+*Successful search:*
+List contains the one node that stores the searched item + 0 or more other nodes.
+
+Expected # of other nodes = x = (N-1)/M which is essentially l, since M is presumed large.
+
+    On the average, we need to check half of the other nodes while searching for a certain element
+    Thus average search cost = 1 + l/2
+    
+**Open Addressing** <img align="right" src="./images/Linear Probing.png">
+- Separate chaining has the disadvantage of using linked lists.
+- Requires the implementation of a second data structure.
+- In an open addressing hashing system, all the data go inside the table.
+- Thus, a bigger table is needed.
+- Generally the load factor should be below 0.5.
+- If a collision occurs, alternative cells are tried until an empty cell is found.
+
+There are three common collision resolution strategies:
+- Linear Probing
+- Quadratic probing 
+- Double hashing
+
+**Analysis**
+- Open addressing means an item with key, k, may not be located at h(k)
+- If location 2 is occupied and a new item hashes to location 2, we need to find another location to store it.
+- Let i be number of failed inserts <img align="right" src="./images/qıadraticProbing.png">
+- Linear Probing
+    - h(k,i) = (h(k)+i) mod m
+    - Example: Check h(k)+1, h(k)+2, h(k)+3, …
+- Quadratic Probing
+    - Quadratic Probing
+    - Check location h(k)+1<sup>2</sup>, h(k)+2<sup>2</sup>, h(k)+3<sup>2</sup>, …
+
+If certain data patterns lead to many collisions, linear probing leads to clusters of occupied areas in the table called primary clustering. 
+
+    The problem of Linear Probing = primary clustering.
+    
+**Quadratic probing tends to spread out data across the table by taking larger and larger steps until it finds an empty location.**
+
+**Find and Removal**
+
+First hash it
+- If it is not at h(k), then move on to the next items in the linear or quadratic sequence of locations until 
+   - you find it or 
+   - an empty location or
+   - search the whole table
+
+What if items get removed
+- Now the find algorithm might terminate  too early
+– Mark a location as "removed"=unoccupied but part of a cluster
+
+**Double Hashing:**
+A second hash function is used to drive the collision resolution.
+
+*f(i) = i * hash<sub>2</sub>(x)*
+
+We apply a second hash function to x and probe at a distance hash<sub>2</sub>(x), 2*hash<sub>2</sub>(x), … and so on.
+
+The function hash<sub>2</sub>(x) must never evaluate to zero.
+
+- e.g. Let hash<sub>2</sub>(x) = x mod 9 and try to insert 99 in the previous example.
+
+A function such as hash2(x) =  R – ( x mod R) with R a prime smaller than TableSize will work well.
+
+- e.g. try R = 7 for the previous example.(7 - x mod 7)
+
+
+# References
+1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
+2. Cormen, T. H., Leiserson, C. E., Rivest, R. L.,, Stein, C. (2001). Introduction to Algorithms. The MIT Press. ISBN: 0262032937
+3. Sahillioğlu, Y. (2021). Hash Tables [PowerPoint slides]. https://user.ceng.metu.edu.tr/~ys/ceng213-ds/ 
+4. Sedgewick, R., Wayne, K. (2011). Algorithms, 4th Edition. Addison-Wesley. ISBN: 978-0-321-57351-3
+5. Redekopp, M., Kempe, D., Batista, S., (2021). Hash Tables & Functions [PowerPoint slides]. http://ee.usc.edu/~redekopp/cs104/slides/L21_Hashing.pdf
+6. Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser. 2014. Data Structures and Algorithms in Java (6th. ed.). Wiley Publishing.
+7. Hashtable in java with example by Chaitanya Singh, 2015, https://beginnersbook.com/2014/07/hashtable-in-java-with-example/. Accessed 29 Jul. 2021.
+
 
 
