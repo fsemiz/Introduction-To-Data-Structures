@@ -273,6 +273,133 @@ A function such as hash2(x) =  R – ( x mod R) with R a prime smaller than Tabl
 
 - e.g. try R = 7 for the previous example.(7 - x mod 7)
 
+#### Running Times for Common Operations in Hash Tables
+
+| Algorithm |  Average |  Worst case |
+|:---------:|----------|-------------|
+|   Space   |  O(n)    |  O(n)       |
+|   Search  |  O(1)    |  O(n)       |
+|   Insert  |  O(1)    |  O(n)       |
+|   Delete  |  O(1)    |  O(n)       |
+
+The reasons why most Hash tables suffer from O(n) worst time complexity:
+- When too many elements were hashed into the same key.
+	- Searching the list in a key may take O(n) time in this case.
+- Once a hash table passes its load balance 
+ 	- It has to rehash (create a new bigger table, and re-insert each element to the table). 
+
+*The worst case can be reduced from O(n) to O(log n) by using a more complex data structure within each bucket (rather than linked list).*
+
+The reasons why Hash tables has a O(1) average case complexity (amortized case):
+- It is very rare that many items will be hashed to the same key 
+ 	- If you chose a good hash function and you don't have too big load balance.
+- The rehash operation, which is O(n), can at most happen after n/2 operations, which are all assumed O(1): 
+ 	- Thus when you sum the average time per operation, you get : (n*O(1) + O(n)) / n) = O(1)
+ 
+ #### Hash Tables in Java Programming Language
+ 
+Hashtable implements Serializable, Cloneable, Map<K,V> interfaces and extends Dictionary<K,V>. The direct subclasses are Properties, UIDefaults.
+
+| <img src="./images/Hash_Tables_In_Java.png" alt="HashTableJava"  width="400" /> |
+|:--:|
+| *The Hierarchy of Hashtable - retrieved from https://www.geeksforgeeks.org/hashtable-in-java/* |
+
+- Any non-null object can be used as a key or as a value. 
+- To successfully store and retrieve objects from a hashtable, the objects used as keys must implement the **hashCode** method and the **equals** method.  
+- To create a Hashtable, it has to be imported from **java.util.Hashtable**.
+
+In java, a hash table can be created in the following ways:
+```Java
+1- Hashtable<K, V> ht = new Hashtable<K, V>();
+2- Hashtable<K, V> ht = new Hashtable<K, V>(int initialCapacity);
+3- Hashtable<K, V> ht = new Hashtable<K, V>(int size, float fillRatio);
+4- Hashtable<K, V> ht = new Hashtable<K, V>(Map m);
+```
+**K** is the type of keys maintained by this map, **V** is the type of mapped values
+
+The first line creates an empty hashtable. 
+- The default load factor of 0.75 and an the default initial capacity of the hash table is 11. 
+
+Second line creates an empty hashtable where the initial capacity is provided by the parameter.
+- The default load factor is 0.75.
+
+The third line creates an empty hashtable with the provided initial capacity and the load factor.
+
+The fourth line creates a hash table that is initialized with the elements in m.
+
+A basic java code with the basic operations on Hash Tables:
+```Java
+// Java program to illustrate basic operations with hash tables
+  
+import java.util.Hashtable;
+import java.util.Map;
+  
+public class IteratingHashtable {
+    public static void main(String[] args)
+    {
+          // Create an instance of Hashtable
+        Hashtable<String, Integer> ht = new Hashtable<>();
+  
+          // Adding elements using put method
+        ht.put(1, "ali");
+        ht.put(3, "veli");
+        ht.put(2, "deli");
+	
+	// Update the value at key 2
+       ht.put(2, "Veli");
+
+          // Remove the map entry with key 4
+        ht.remove(1);
+	
+          // Iterating using enhanced for loop
+        for (Map.Entry<String, Integer> e : ht.entrySet())
+            System.out.println(e.getKey() + " "
+                               + e.getValue());
+    }
+}
+```
+The output is:
+```
+3 Veli
+2 deli
+```
+ #### Hash Tables in Python Programming Language
+Python comes with a built-in data type called **Dictionary**. 
+A dictionary is an example of a hash table. 
+- It stores values using a pair of keys and values. 
+- The hash values are automatically generated, and any collisions are resolved in the background. 
+
+The following example shows the basic hash table operations in python3:
+```Python
+#Define a dictionary in which the keys are 'name', 'age' and 'position'
+#'John Doe', '36' and 'Business Manager' are the values
+employee = {
+    'name': 'John Doe',
+    'age': 36,
+    'position': 'Business Manager.'
+}
+
+#Retrieves and prints the value of the key 'name'
+print (f"The name of the employee is {employee['name']}")
+
+#Updates the vaule of the key 'position'
+employee['position'] = 'Software Engineer'
+
+print (f"The position of {employee['name']} is {emploonyee['position']}")
+
+#Clears the hash table
+employee.clear()
+
+#Prints out the values after the 'clear' action
+print (employee)
+```
+The output is:
+```
+The name of the employee is John Doe.
+The position of John Doe is a Software Engineer.
+{}
+```
+
 
 # References
 1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
