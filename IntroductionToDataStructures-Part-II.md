@@ -258,6 +258,7 @@ What if items get removed
 – Mark a location as "removed"=unoccupied but part of a cluster
 
 **Double Hashing:**
+
 A second hash function is used to drive the collision resolution.
 
 *f(i) = i * hash<sub>2</sub>(x)*
