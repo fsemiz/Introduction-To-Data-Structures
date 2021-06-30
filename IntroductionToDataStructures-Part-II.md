@@ -18,6 +18,7 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 - Grokking Algorithms - Aditya Y. Bhargava
 - Hash Tables & Functions - Mark Redekopp, David Kempe, Sandra Batista
 - Data Structures and Algorithms in Java - Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser.
+- Discrete Mathematics (Freie Universität Berlin) - Gunner Klaus  (PowePoint Slides)
 - Wikipedia - www.wikipedia.com
 
 ### Hash Tables
@@ -257,21 +258,41 @@ What if items get removed
 - Now the find algorithm might terminate  too early
 – Mark a location as "removed"=unoccupied but part of a cluster
 
-**Double Hashing:**
+**Double Hashing (Rehashing):**
+
+	Double hashing is a technique used for avoiding collisions in hash tables.
 
 A second hash function is used to drive the collision resolution.
 
-*f(i) = i * hash<sub>2</sub>(x)*
+The idea: Make the offset to the next position probed depend on the key value, so it can be different for different keys.
 
-We apply a second hash function to x and probe at a distance hash<sub>2</sub>(x), 2*hash<sub>2</sub>(x), … and so on.
+An example of double hashing:
 
-The function hash<sub>2</sub>(x) must never evaluate to zero.
+```
+(firstHash(key) + i * secondHash(key)) % tableSize 
+```
+The value of **i** will keep incrementing (the offset will keep increasing) until an empty slot is found.
 
-- e.g. Let hash<sub>2</sub>(x) = x mod 9 and try to insert 99 in the previous example.
+- Double hashing is useful if an application requires a smaller hash table since it effectively finds a free slot.
+- Althought the computational cost may be high, double hashing can find the next free slot faster than the linear probing approach.
 
-A function such as hash2(x) =  R – ( x mod R) with R a prime smaller than TableSize will work well.
+**Universal Hashing**
 
-- e.g. try R = 7 for the previous example.(7 - x mod 7)
+No matter how we choose our hash function, it is always possible to devise a set of keys that will hash to the same slot, making the hash scheme perform poorly.
+
+To overcome this issue, we randomize the choice of a hash function from a carefully designed set of functions.
+
+Let &#934; be a finite collection of hash functions that map a given universe U of keys into the range {0,1,2,...,m−1}.
+
+&#934; is called universal if for each pair of distinct keys x,y &#8712; U, 
+
+The number of hash functions h &#8712; &#934; for which h(x) = h(y) is precisely equal to 
+|&#934;|/m.
+
+With a function randomly chosen from &#934;, the chance of a collision between x and y where x &#8800; y is exactly 1/m.
+
+**Theorem.** If h is chosen from a universal class of hash functions and is used to hash n keys into a table of size m, where n ≤ m, the expected number of collisions
+involving a particular key x is less than 1.
 
 #### Running Times for Common Operations in Hash Tables
 
