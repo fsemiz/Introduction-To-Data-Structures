@@ -421,6 +421,15 @@ The position of John Doe is a Software Engineer.
 {}
 ```
 
+### Trees
+
+	A tree data structure can be defined recursively as a collection of nodes (starting at a root node), where each node is a
+	data structure consisting of a value, together with a list of references to nodes (the "children"), with the constraints 
+	that no reference is duplicated, and none points to the root.
+
+|![alt](images/tree_definitions_imagepng.png) |![alt](images/tree_definitions.png)|
+|-|-|
+| *A visual tree representation* |*Tree definitions* |
 
 # References
 1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
