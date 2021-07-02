@@ -510,24 +510,154 @@ root.children = [children1, children2]
 - **N-ary trees:** Tree where each node has at most n children.
 - **Binary trees:** Binary tree = N-ary Tree with n=2
 
-Full binary tree: Binary tree, T, where
-– If height h>0 and both subtrees are full binary
-trees of height, h-1
-– If height h==0, then it is full by definition
-– (Tree where all leaves are at level h and all other
-nodes have 2 children)
- Complete binary tree
-– Tree where levels 0 to h-1 are full and level h is
-filled from left to right
- Balanced binary tree
-– Tree where subtrees from any node differ in
-height by at most 1
+## Binary trees:
 
-Binary Search Tree
+Full binary tree: a binary tree, T, where:
 
-Traversals (pre, post, in) ve kodları
+- Full binary tree is a binary tree in which every node has 0 or 2 children.
+- If height h==0, then it is full by definition
 
-Heap
+
+Complete binary tree 
+
+- Tree where levels 0 to h-1 are full and level h is filled from left to right
+ 
+ 
+Balanced binary tree 			
+
+- Tree where subtrees from any node differ in height by at most 1
+
+<img src="./images/FullCompleteBalanced.png" width="1000">
+
+
+## Binary Tree Definition with Java
+
+```Java
+class Node {
+    int value;
+    Node left;
+    Node right;
+
+    Node(int value) {
+        this.value = value;
+        right = null;
+        left = null;
+    }
+}
+
+private Node addRecursive(Node current, int value) {
+    if (current == null) {
+        return new Node(value);
+    }
+
+    if (value < current.value) {
+        current.left = addRecursive(current.left, value);
+    } else if (value > current.value) {
+        current.right = addRecursive(current.right, value);
+    } else {
+        // value already exists
+        return current;
+    }
+
+    return current;
+}
+
+public void add(int value) {
+    root = addRecursive(root, value);
+}
+```
+
+Usage:
+
+```Java
+private BinaryTree createBinaryTree() {
+    BinaryTree bt = new BinaryTree();
+
+    bt.add(8);
+    bt.add(3);
+    bt.add(2);
+    bt.add(6);
+    bt.add(7);
+    bt.add(4);
+    bt.add(1);
+
+    return bt;
+}
+```
+
+The visualisation of the resulting tree is:
+
+<img src="./images/bstExampleOutput.png" width="400">
+
+
+## Binary Tree Definition with Python
+
+ ```Python  
+class Node:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.val = key
+ 
+def insert(root, key):
+    if root is None:
+        return Node(key)
+    else:
+        if root.val == key:
+            return root
+        elif root.val < key:
+            root.right = insert(root.right, key)
+        else:
+            root.left = insert(root.left, key)
+    return root
+```
+Usage:
+
+```Python 
+r = Node(8)
+r = insert(r, 3)
+r = insert(r, 2)
+r = insert(r, 6)
+r = insert(r, 7)
+r = insert(r, 4)
+r = insert(r, 1)
+ ```
+ 
+## Binary Tree Traversals
+
+Unlike linear data structures (Array, Linked List, Queues, Stacks, etc.) which have only one logical way to traverse them, trees can be traversed in different ways. Pre-order, in-order and post-order traversals are the generally used ways for traversing trees.  
+
+- **Pre-order** Process root then visit subtrees 
+- **In-order** Visit left subtree, process root, visit right subtree
+- **Post-order** Visit left subtree, visit right subtree, process root
+ 
+<img src="./images/TraversalOrderEx.png" width="300">
+
+<img src="./images/Orders2.png" width="1000">
+
+## Heaps
+
+A heap is a data structure - specifically, a rooted, nearly complete binary tree - where the key of the root is greater than the key of either of its children, and this is recursively true for the subtree rooted at each child. Nearly complete means that the tree is completely filled except possibly on the lowest level, which is filled from left to right.
+
+Can think of heap as a complete binary tree with the property that every parent is less-than (if min-heap) or greater-than (ifmax-heap) both children
+– But no ordering property between children
+
+| <img src="./images/MinHeap.png" alt="MinHeap"  width="400" /> |
+|:--:|
+| *Min Heap* |
+
+## Binary Search Tree 
+
+Binary Search Tree is a node-based binary tree data structure which has the following properties:
+
+- The left subtree of a node contains only nodes with keys lesser than the node’s key.
+- The right subtree of a node contains only nodes with keys greater than the node’s key.
+- The left and right subtree each must also be a binary search tree.
+
+
+
+
+
 
 Red Black Tree
 
