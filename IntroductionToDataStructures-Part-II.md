@@ -427,9 +427,109 @@ The position of John Doe is a Software Engineer.
 	data structure consisting of a value, together with a list of references to nodes (the "children"), with the constraints 
 	that no reference is duplicated, and none points to the root.
 
-|![alt](images/tree_definitions_imagepng.png) |![alt](images/tree_definitions.png)|
-|-|-|
-| *A visual tree representation* |*Tree definitions* |
+| <img src="images/TreeDefinitionsDetailed.png" width="900"> | <img src="images/tree_definitions.png" width="400"> |
+|------------|-------------|
+| A visual tree representation ([image](https://medium.com/swlh/making-data-trees-in-python-3a3ceb050cfd))   | Tree definitions     |
+
+- A tree is a collection of entities called nodes. 
+- Nodes are connected by edges. Each node contains a value or data, and it may or may not have a child node .
+- A root node, r, that has 0 or more subtrees.
+- Exactly one path between any two nodes.
+- Nodes have exactly one parent (except for the root) and 0 or more children
+- Arrays, linked-lists, queues and stacks are all **linear data structures** but trees are not.
+- In **non-linear data structures**, the data doesn’t really follow an order. And because the data doesn’t necessarily need to be arranged in a particular order, it’s easy (and actually pretty common) to traverse a non-linear data structure in a non-sequential manner.
+
+| <img src="images/recursive.png" width="500"> | <img src="images/TreeFileSystem.png" width="500"> |
+|------------|-------------|
+| Trees are recursive data structures!      | File systems are example of trees. ([image](https://medium.com/basecs/how-to-not-be-stumped-by-trees-5f36208f68a7))       |
+
+## Java Tree Implementation
+
+Implementing a tree with basic operations:
+```Java
+import java.util.ArrayList;
+
+public class TreeNode {
+    public String LABEL;
+    public ArrayList<TreeNode> children;
+    
+    public TreeNode(String LABEL) {
+        this.LABEL = LABEL;
+        children = new ArrayList<>();
+    }
+    
+    public boolean addChild(String label) {
+        return children.add(new TreeNode(label));
+    }
+    
+    public ArrayList<TreeNode> getChildren() {
+        return new ArrayList<>(children);
+    }
+   
+}
+```
+
+Usage:
+
+```Java
+class TestGeneralTree {
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode("root node");
+        
+        root.addChild("child1");
+        root.addChild("child2");
+        
+        root.children.get(0).addChild("child3");
+    }
+}
+```
+
+## Python Tree Implementation
+
+Implementing a tree with basic operations:
+```Python
+class Tree:
+    def __init__(self, data):
+        self.children = []
+        self.data = data
+```
+
+Usage:
+
+```Python
+children1 = Tree("children1")
+children2 = Tree("children2")
+children3 = Tree("children3")
+
+children2.children = [children3]
+
+root = Tree("root node")
+root.children = [children1, children2]
+```
+
+- **N-ary trees:** Tree where each node has at most n children.
+- **Binary trees:** Binary tree = N-ary Tree with n=2
+
+Full binary tree: Binary tree, T, where
+– If height h>0 and both subtrees are full binary
+trees of height, h-1
+– If height h==0, then it is full by definition
+– (Tree where all leaves are at level h and all other
+nodes have 2 children)
+ Complete binary tree
+– Tree where levels 0 to h-1 are full and level h is
+filled from left to right
+ Balanced binary tree
+– Tree where subtrees from any node differ in
+height by at most 1
+
+Binary Search Tree
+
+Traversals (pre, post, in) ve kodları
+
+Heap
+
+Red Black Tree
 
 # References
 1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
