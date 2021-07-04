@@ -1,6 +1,6 @@
 # Introduction to Data Structures - Part I
 
-Authors: **Fatih Semiz - Kaan Keskin**
+Authors: **Kaan Keskin, Fatih Semiz**
 
 Date: July 2021
 

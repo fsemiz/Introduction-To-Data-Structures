@@ -1,6 +1,6 @@
 # Introduction to Data Structures - Part II
 
-Authors: **Fatih Semiz - Kaan Keskin**
+Authors: **Fatih Semiz, Kaan Keskin**
 
 Date: July 2021
 
@@ -31,7 +31,7 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 A hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index, also called a hash code, into an array of buckets or slots, from which the desired value can be found. A hash table generalizes the idea of an simple array in which we can access an ordinary elements position in O(1) time. If number of keys stored is small compared to total number of keys then it is effective to use an hash table. One idea that hash tables use is to compute the key from the index instead of directly using the key.
 
 An array maps integers to values
-+ Given i , [i] returns the value in O(1)
++ Given i , array[i] returns the value in O(1)
 
 Dictionaries map keys to values
 + Given key, k, map[k] returns the associated value
@@ -160,6 +160,10 @@ Is it possible we haven't had a collision?
 Pigeon Hole Principle says given n items to be slotted into m holes and **n > m** there is at least one hole with more than 1 item
 - So if **n > m** , we know we've had a collision
 - We can only avoid a collision when **n < m**
+
+| <img src="./images/TooManyPigeons.jpg" alt="Collision"  width="400" /> |
+|:--:|
+| *Pigeons in holes. Here there are n = 10 pigeons in m = 9 holes. Since 10 is greater than 9, the pigeonhole principle says that at least one hole has more than one pigeon. (The top left hole has 2 pigeons.) - retrieved from: https://en.wikipedia.org/wiki/Pigeonhole_principle* |
 
 **Resolving Collisions**
 - Collisions occur when two keys, k<sub>1</sub> and k<sub>2</sub>, are not equal, but h(k<sub>1</sub>) = h(k<sub>2</sub>).
