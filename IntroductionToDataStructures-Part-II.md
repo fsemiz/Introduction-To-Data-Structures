@@ -990,6 +990,28 @@ r = insert(r, 1)
 	In computer science, a red–black tree is a kind of self-balancing binary search tree. Each node stores an extra 
 	bit representing "color" ("red" or "black"), used to ensure that the tree remains balanced during insertions and deletions.
 
+By constraining the node colors on any simple path from the root to a leaf, red-black trees ensure that no such path is more
+than twice as long as any other, so that the tree is **approximately balanced**.
+
+A red-black tree is a binary tree that satisfies the following red-black properties:
+- Every node is either red or black.
+- The root is black.
+- Every leaf (NIL) is black.
+- If a node is red, then both its children are black.
+- For each node, all simple paths from the node to descendant leaves contain the
+same number of black nodes.
+
+| <img src="./images/redblacktree.png" alt="MinHeap"  width="500" /> |
+|:--:|
+| *Red Black Trees* |
+
+Why to use red black trees:
+- BST - Binary Search Tree in worst can can have a complexity of O(n) in insert, delete (see example below).
+- The Red-Black trees guarantee a O(log(n)) in insert, delete (even in worst case). 
+- They are balanced search trees and therefore balance themselves to always maintain a height of log(n).
+- Consider inserting 1,2,3,4,5 into a binary tree. It’ll make 1 as the root and all the following elements would keep going to the right thus forming a linked list in essence (and each operation thus taking O(n) time).
+- Average time complexity may be the same, but if we consider the worst case, the time complexity of red black trees is better than binary search trees.
+
 # References
 1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
 2. Cormen, T. H., Leiserson, C. E., Rivest, R. L.,, Stein, C. (2001). Introduction to Algorithms. The MIT Press. ISBN: 0262032937
