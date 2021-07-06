@@ -16,10 +16,11 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 - Hash Tables - Yusuf Sahillioğlu (PowePoint Slides)
 - Algorithms - Robert Sedgewick, Kevin Wayne
 - Grokking Algorithms - Aditya Y. Bhargava
-- Hash Tables & Functions - Mark Redekopp, David Kempe, Sandra Batista
+- CSCI 104 Slides - Mark Redekopp, David Kempe, Sandra Batista
 - Data Structures and Algorithms in Java - Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser.
 - Discrete Mathematics (Freie Universität Berlin) - Gunner Klaus  (PowePoint Slides)
 - Wikipedia - www.wikipedia.com
+- Purdue University CS251 Slides
 
 ### Hash Tables
     Hash Table: A hash table is a data structure that implements an associative array abstract data type, a structure that can map keys to values.
@@ -1001,25 +1002,38 @@ A red-black tree is a binary tree that satisfies the following red-black propert
 - For each node, all simple paths from the node to descendant leaves contain the
 same number of black nodes.
 
-| <img src="./images/redblacktree.png" alt="MinHeap"  width="500" /> |
+| <img src="./images/redblacktree.png" alt="RB-Tree"  width="500" /> |
 |:--:|
 | *Red Black Trees* |
 
-Why to use red black trees:
+## BST vs Red Black Trees:
 - BST - Binary Search Tree in worst can can have a complexity of O(n) in insert, delete (see example below).
 - The Red-Black trees guarantee a O(log(n)) in insert, delete (even in worst case). 
 - They are balanced search trees and therefore balance themselves to always maintain a height of log(n).
-- Consider inserting 1,2,3,4,5 into a binary tree. It’ll make 1 as the root and all the following elements would keep going to the right thus forming a linked list in essence (and each operation thus taking O(n) time).
+- Consider inserting 1,2,3,4,5 into a binary search tree. It’ll make 1 as the root and all the following elements would keep going to the right thus forming a linked list in essence (and each operation thus taking O(n) time).
 - Average time complexity may be the same, but if we consider the worst case, the time complexity of red black trees is better than binary search trees.
 
-# References
-1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
-2. Cormen, T. H., Leiserson, C. E., Rivest, R. L.,, Stein, C. (2001). Introduction to Algorithms. The MIT Press. ISBN: 0262032937
-3. Sahillioğlu, Y. (2021). Hash Tables [PowerPoint slides]. https://user.ceng.metu.edu.tr/~ys/ceng213-ds/ 
-4. Sedgewick, R., Wayne, K. (2011). Algorithms, 4th Edition. Addison-Wesley. ISBN: 978-0-321-57351-3
-5. Redekopp, M., Kempe, D., Batista, S., (2021). Hash Tables & Functions [PowerPoint slides]. http://ee.usc.edu/~redekopp/cs104/slides/L21_Hashing.pdf
-6. Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser. 2014. Data Structures and Algorithms in Java (6th. ed.). Wiley Publishing.
-7. Hashtable in java with example by Chaitanya Singh, 2015, https://beginnersbook.com/2014/07/hashtable-in-java-with-example/. Accessed 29 Jul. 2021.
+# AVL Trees
 
+	An AVL Tree is a binary search tree such that for every internal node v of T, the heights of the 
+	children of v can differ by at most 1.
+	
+- Named after inventors Georgy **A**delson-**V**elsky and Evgenii **L**andis
+- Is a self-balancing binary search tree. 
+- The height of an AVL tree T storing n keys is O(log n)
+- After each instertion and deletion, balancing operations must be performed.
 
+An example of an AVL tree where the heights are shown next to the nodes:
+| <img src="./images/AVLTREE.png" alt="AVL-Trees" width="500" /> |
+|:--:|
+| *AVL Trees* |
 
+## AVL Trees vs Red Black Trees:
+- AVL trees provide faster lookups than Red Black Trees because they are more strictly balanced.
+- Red Black Trees provide faster insertion and removal operations than AVL trees as fewer rotations are done due to relatively relaxed balancing.
+	- To keep the tree balanced AVL trees does more CPU instructions per operation (insert/delete) at average.
+- AVL trees store the balance factor at each node. This takes O(N) extra space.
+-  However, if we know that the keys that will be inserted in the tree will always be greater than zero, we can use the sign bit of the keys to store the colour information of a red-black tree. Thus, in such cases red-black tree takes no extra space.
+- Red Black Trees are used in most of the language libraries like map, multimap, multiset in C++ whereas AVL trees are used in databases where faster retrievals are required.
+- Thus for a look-up intensive task using an AVL tree is advantageous.
+- For an insert intensive tasks, using a Red-Black tree is adventageous.
