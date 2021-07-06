@@ -425,8 +425,18 @@ The name of the employee is John Doe.
 The position of John Doe is a Software Engineer.
 {}
 ```
+### Applications of Hash Tables
 
-### Trees
+- File System
+	- The hashing is used for the linking of the file name to the path of the file. 
+- Password Verification
+	- When you use some web service and enter your credentials to log in, a hash value of your password is computed on the client-side and then sent to the server which then compares that hash value with the hash value of the stored password.
+- Pattern Matching
+- Programming Languages
+- Compilers
+	- For identifying the keywords in the programming languages, the compiler uses the hash table to store these keywords and other identifiers to compile the program.
+
+# Trees
 
 	A tree data structure can be defined recursively as a collection of nodes (starting at a root node), where each node is a
 	data structure consisting of a value, together with a list of references to nodes (the "children"), with the constraints 
