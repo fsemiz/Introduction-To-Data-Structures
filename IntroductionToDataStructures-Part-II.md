@@ -16,10 +16,11 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 - Hash Tables - Yusuf Sahillioğlu (PowePoint Slides)
 - Algorithms - Robert Sedgewick, Kevin Wayne
 - Grokking Algorithms - Aditya Y. Bhargava
-- Hash Tables & Functions - Mark Redekopp, David Kempe, Sandra Batista
+- CSCI 104 Slides - Mark Redekopp, David Kempe, Sandra Batista
 - Data Structures and Algorithms in Java - Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser.
 - Discrete Mathematics (Freie Universität Berlin) - Gunner Klaus  (PowePoint Slides)
 - Wikipedia - www.wikipedia.com
+- Purdue University CS251 Slides
 
 ### Hash Tables
     Hash Table: A hash table is a data structure that implements an associative array abstract data type, a structure that can map keys to values.
@@ -424,8 +425,18 @@ The name of the employee is John Doe.
 The position of John Doe is a Software Engineer.
 {}
 ```
+### Applications of Hash Tables
 
-### Trees
+- File System
+	- The hashing is used for the linking of the file name to the path of the file. 
+- Password Verification
+	- When you use some web service and enter your credentials to log in, a hash value of your password is computed on the client-side and then sent to the server which then compares that hash value with the hash value of the stored password.
+- Pattern Matching
+- Programming Languages
+- Compilers
+	- For identifying the keywords in the programming languages, the compiler uses the hash table to store these keywords and other identifiers to compile the program.
+
+# Trees
 
 	A tree data structure can be defined recursively as a collection of nodes (starting at a root node), where each node is a
 	data structure consisting of a value, together with a list of references to nodes (the "children"), with the constraints 
@@ -532,9 +543,367 @@ Balanced binary tree
 - Tree where subtrees from any node differ in height by at most 1
 
 <img src="./images/FullCompleteBalanced.png" width="1000">
+ 
+## Binary Tree Traversals
+
+Unlike linear data structures (Array, Linked List, Queues, Stacks, etc.) which have only one logical way to traverse them, trees can be traversed in different ways. Pre-order, in-order and post-order traversals are the generally used ways for traversing trees.  
+
+- **Pre-order** Process root then visit subtrees 
+- **In-order** Visit left subtree, process root, visit right subtree
+- **Post-order** Visit left subtree, visit right subtree, process root
+ 
+<img src="./images/TraversalOrderEx.png" width="300">
+
+<img src="./images/Orders2.png" width="1000">
+
+## Priority Queues
+	In a priority queue, an element with high priority is served before an element with low priority.
+
+Priority queue: Remove the largest (or smallest) item.
+
+A priority queue can be implemented as:
+- Binary Search Tree
+- Linked List
+- Array
 
 
-## Binary Tree Definition with Java
+Priority queue applications:
+- Event-driven simulation. [ customers in a line, colliding particles ]
+- Numerical computation. [ reducing roundoff error ]
+- Data compression. [ Huffman codes ]
+- Graph searching. [ Dijkstra's algorithm, Prim's algorithm ]
+- Number theory. [ sum of powers ]
+- Artificial intelligence. [ A* search ]
+- Statistics. [ online median in data stream ]
+- Operating systems. [ load balancing, interrupt handling ]
+- Computer networks. [ web cache ]
+- Discrete optimization. [ bin packing, scheduling ]
+- Spam filtering. [ Bayesian spam filter ]
+
+
+| data type      | key operations        | data structure              |
+|----------------|-----------------------|-----------------------------|
+| stack          | PUSH, POP             | linked list, resizing array |
+| queue          | ENQUEUE, DEQUEUE      | linked list, resizing array |
+| **priority queue** | **INSERT, DELETE-MAX**    | **binary heap**                 |
+| symbol table   | PUT, GET, DELETE      | BST, hash table             |
+| set            | ADD, CONTAINS, DELETE | BST, hash table             |
+
+## Heaps
+
+	A heap is a data structure - specifically, a rooted, nearly complete binary tree - where the key of the root is greater 
+	than the key of either of its children, and this is recursively true for the subtree rooted at each child. 
+
+Nearly complete means that the tree is completely filled except possibly on the lowest level, which is filled from left to right.
+
+Can think of heap as a complete binary tree with the property that every parent is less-than (if min-heap) or greater-than (ifmax-heap) both children
+– But no ordering property between children
+
+Provides an efficient implementation for a priority queue.
+
+| <img src="./images/MinHeap.png" alt="MinHeap"  width="400" /> |
+|:--:|
+| *Min Heap* |
+
+Many applications require that we process records with keys in order, but not necessarily in full sorted order.
+
+It is a common need to collect a set of items and process the one with the current minimum/maximum value.
+	- One Common Example: Operating systems to schedule jobs
+
+| <img src="./images/HeapWithArray2.png" alt="MinHeap"  width="1000" /> |
+|:--:|
+| *Representing heaps with arrays* |
+
+
+**Binary heap:** Array representation of a heap-ordered complete binary tree.
+- Parent's key no smaller than children's keys.
+
+Array representation:
+- Indices start at 1.
+- Take nodes in level order.
+- No explicit links needed!
+
+Largest key is a[1], which is root of binary tree.
+
+Can use array indices to move through tree.
+- Parent(i) = i/2
+- Left_child(p) = 2*p
+- Right_child(p) = 2*p + 1
+
+## Push Heap
+
+Add item to first free location at bottom of tree:
+- Recursively promote it up while it is less than its parent
+– Remember valid heap all parents < children
+- so we need to promote it up until that property is satisfied
+
+| <img src="./images/push_heap.png" alt="MinHeap"  width="1000" /> |
+|:--:|
+| *Push heap example* |
+
+## Pop Heap
+Takes last (greatest) node puts it in the top location and then recursively swaps it for the smallest child until it is in its right place
+
+| <img src="./images/PopHeap2.png" alt="MinHeap"  width="1000" /> |
+|:--:|
+| *Pop heap example* |
+
+
+## Java Heap Implementation
+```Java
+// Java implementation of Min Heap
+public class MinHeap {
+    private int[] Heap;
+    private int size;
+    private int maxsize;
+ 
+    private static final int FRONT = 1;
+ 
+    public MinHeap(int maxsize)
+    {
+        this.maxsize = maxsize;
+        this.size = 0;
+        Heap = new int[this.maxsize + 1];
+        Heap[0] = Integer.MIN_VALUE;
+    }
+ 
+    // Function to return the position of
+    // the parent for the node currently
+    // at pos
+    private int parent(int pos)
+    {
+        return pos / 2;
+    }
+ 
+    // Function to return the position of the
+    // left child for the node currently at pos
+    private int leftChild(int pos)
+    {
+        return (2 * pos);
+    }
+ 
+    // Function to return the position of
+    // the right child for the node currently
+    // at pos
+    private int rightChild(int pos)
+    {
+        return (2 * pos) + 1;
+    }
+ 
+    // Function that returns true if the passed
+    // node is a leaf node
+    private boolean isLeaf(int pos)
+    {
+        if (pos >= (size / 2) && pos <= size) {
+            return true;
+        }
+        return false;
+    }
+ 
+    // Function to swap two nodes of the heap
+    private void swap(int fpos, int spos)
+    {
+        int tmp;
+        tmp = Heap[fpos];
+        Heap[fpos] = Heap[spos];
+        Heap[spos] = tmp;
+    }
+ 
+    // Function to heapify the node at pos
+    private void minHeapify(int pos)
+    {
+ 
+        // If the node is a non-leaf node and greater
+        // than any of its child
+        if (!isLeaf(pos)) {
+            if (Heap[pos] > Heap[leftChild(pos)]
+                || Heap[pos] > Heap[rightChild(pos)]) {
+ 
+                // Swap with the left child and heapify
+                // the left child
+                if (Heap[leftChild(pos)] < Heap[rightChild(pos)]) {
+                    swap(pos, leftChild(pos));
+                    minHeapify(leftChild(pos));
+                }
+ 
+                // Swap with the right child and heapify
+                // the right child
+                else {
+                    swap(pos, rightChild(pos));
+                    minHeapify(rightChild(pos));
+                }
+            }
+        }
+    }
+ 
+    // Function to insert a node into the heap
+    public void insert(int element)
+    {
+        if (size >= maxsize) {
+            return;
+        }
+        Heap[++size] = element;
+        int current = size;
+ 
+        while (Heap[current] < Heap[parent(current)]) {
+            swap(current, parent(current));
+            current = parent(current);
+        }
+    }
+ 
+    // Function to print the contents of the heap
+    public void print()
+    {
+        for (int i = 1; i <= size / 2; i++) {
+            System.out.print(" PARENT : " + Heap[i]
+                             + " LEFT CHILD : " + Heap[2 * i]
+                             + " RIGHT CHILD :" + Heap[2 * i + 1]);
+            System.out.println();
+        }
+    }
+ 
+    // Function to remove and return the minimum
+    // element from the heap
+    public int remove()
+    {
+        int popped = Heap[FRONT];
+        Heap[FRONT] = Heap[size--];
+        minHeapify(FRONT);
+        return popped;
+    }
+ ```
+ 
+ Usage: 
+ ```Java
+    // Driver code
+    public static void main(String[] arg)
+    {
+        System.out.println("The Min Heap is ");
+        MinHeap minHeap = new MinHeap(15);
+        minHeap.insert(5);
+        minHeap.insert(3);
+        minHeap.insert(17);
+        minHeap.insert(10);
+        minHeap.insert(84);
+        minHeap.insert(19);
+        minHeap.insert(6);
+        minHeap.insert(22);
+        minHeap.insert(9);
+ 
+        minHeap.print();
+        System.out.println("The Min val is " + minHeap.remove());
+    }
+```
+
+## Python Heap Implementation
+
+```Python
+
+class MinHeap:
+    def __init__(self):
+        """
+        On this implementation the heap list is initialized with a value
+        """
+        self.heap_list = [0]
+        self.current_size = 0
+ 
+    def sift_up(self, i):
+        """
+        Moves the value up in the tree to maintain the heap property.
+        """
+        # While the element is not the root or the left element
+        while i // 2 > 0:
+            # If the element is less than its parent swap the elements
+            if self.heap_list[i] < self.heap_list[i // 2]:
+                self.heap_list[i], self.heap_list[i // 2] = self.heap_list[i // 2], self.heap_list[i]
+            # Move the index to the parent to keep the properties
+            i = i // 2
+ 
+    def insert(self, k):
+        """
+        Inserts a value into the heap
+        """
+        # Append the element to the heap
+        self.heap_list.append(k)
+        # Increase the size of the heap.
+        self.current_size += 1
+        # Move the element to its position from bottom to the top
+        self.sift_up(self.current_size)
+ 
+    def sift_down(self, i):
+        # if the current node has at least one child
+        while (i * 2) <= self.current_size:
+            # Get the index of the min child of the current node
+            mc = self.min_child(i)
+            # Swap the values of the current element is greater than its min child
+            if self.heap_list[i] > self.heap_list[mc]:
+                self.heap_list[i], self.heap_list[mc] = self.heap_list[mc], self.heap_list[i]
+            i = mc
+ 
+    def min_child(self, i):
+        # If the current node has only one child, return the index of the unique child
+        if (i * 2)+1 > self.current_size:
+            return i * 2
+        else:
+            # Herein the current node has two children
+            # Return the index of the min child according to their values
+            if self.heap_list[i*2] < self.heap_list[(i*2)+1]:
+                return i * 2
+            else:
+                return (i * 2) + 1
+ 
+    def delete_min(self):
+        # Equal to 1 since the heap list was initialized with a value
+        if len(self.heap_list) == 1:
+            return 'Empty heap'
+ 
+        # Get root of the heap (The min value of the heap)
+        root = self.heap_list[1]
+ 
+        # Move the last value of the heap to the root
+        self.heap_list[1] = self.heap_list[self.current_size]
+ 
+        # Pop the last value since a copy was set on the root
+        *self.heap_list, _ = self.heap_list
+ 
+        # Decrease the size of the heap
+        self.current_size -= 1
+ 
+        # Move down the root (value at index 1) to keep the heap property
+        self.sift_down(1)
+ 
+        # Return the min value of the heap
+        return root	
+```
+
+Usage:
+
+```Python
+"""
+Driver program
+"""
+# Same tree as above example.
+my_heap = MinHeap()
+my_heap.insert(5)
+my_heap.insert(6)
+my_heap.insert(7)
+my_heap.insert(9)
+my_heap.insert(13)
+my_heap.insert(11)
+my_heap.insert(10)
+
+print(my_heap.delete_min()) # removing min node i.e 5 
+```
+
+## Binary Search Tree 
+
+Binary Search Tree is a node-based binary tree data structure which has the following properties:
+
+- The left subtree of a node contains only nodes with keys lesser than the node’s key.
+- The right subtree of a node contains only nodes with keys greater than the node’s key.
+- The left and right subtree each must also be a binary search tree.
+
+## Binary Search Tree Definition with Java
 
 ```Java
 class Node {
@@ -594,7 +963,7 @@ The visualisation of the resulting tree is:
 <img src="./images/bstExampleOutput.png" width="400">
 
 
-## Binary Tree Definition with Python
+## Binary Search Tree Definition with Python
 
  ```Python  
 class Node:
@@ -626,53 +995,55 @@ r = insert(r, 7)
 r = insert(r, 4)
 r = insert(r, 1)
  ```
- 
-## Binary Tree Traversals
 
-Unlike linear data structures (Array, Linked List, Queues, Stacks, etc.) which have only one logical way to traverse them, trees can be traversed in different ways. Pre-order, in-order and post-order traversals are the generally used ways for traversing trees.  
+## Red Black Trees
 
-- **Pre-order** Process root then visit subtrees 
-- **In-order** Visit left subtree, process root, visit right subtree
-- **Post-order** Visit left subtree, visit right subtree, process root
- 
-<img src="./images/TraversalOrderEx.png" width="300">
+	In computer science, a red–black tree is a kind of self-balancing binary search tree. Each node stores an extra 
+	bit representing "color" ("red" or "black"), used to ensure that the tree remains balanced during insertions and deletions.
 
-<img src="./images/Orders2.png" width="1000">
+By constraining the node colors on any simple path from the root to a leaf, red-black trees ensure that no such path is more
+than twice as long as any other, so that the tree is **approximately balanced**.
 
-## Heaps
+A red-black tree is a binary tree that satisfies the following red-black properties:
+- Every node is either red or black.
+- The root is black.
+- Every leaf (NIL) is black.
+- If a node is red, then both its children are black.
+- For each node, all simple paths from the node to descendant leaves contain the
+same number of black nodes.
 
-A heap is a data structure - specifically, a rooted, nearly complete binary tree - where the key of the root is greater than the key of either of its children, and this is recursively true for the subtree rooted at each child. Nearly complete means that the tree is completely filled except possibly on the lowest level, which is filled from left to right.
-
-Can think of heap as a complete binary tree with the property that every parent is less-than (if min-heap) or greater-than (ifmax-heap) both children
-– But no ordering property between children
-
-| <img src="./images/MinHeap.png" alt="MinHeap"  width="400" /> |
+| <img src="./images/redblacktree.png" alt="RB-Tree"  width="500" /> |
 |:--:|
-| *Min Heap* |
+| *Red Black Trees* |
 
-## Binary Search Tree 
+## BST vs Red Black Trees:
+- BST - Binary Search Tree in worst can can have a complexity of O(n) in insert, delete (see example below).
+- The Red-Black trees guarantee a O(log(n)) in insert, delete (even in worst case). 
+- They are balanced search trees and therefore balance themselves to always maintain a height of log(n).
+- Consider inserting 1,2,3,4,5 into a binary search tree. It’ll make 1 as the root and all the following elements would keep going to the right thus forming a linked list in essence (and each operation thus taking O(n) time).
+- Average time complexity may be the same, but if we consider the worst case, the time complexity of red black trees is better than binary search trees.
 
-Binary Search Tree is a node-based binary tree data structure which has the following properties:
+# AVL Trees
 
-- The left subtree of a node contains only nodes with keys lesser than the node’s key.
-- The right subtree of a node contains only nodes with keys greater than the node’s key.
-- The left and right subtree each must also be a binary search tree.
+	An AVL Tree is a binary search tree such that for every internal node v of T, the heights of the 
+	children of v can differ by at most 1.
+	
+- Named after inventors Georgy **A**delson-**V**elsky and Evgenii **L**andis
+- Is a self-balancing binary search tree. 
+- The height of an AVL tree T storing n keys is O(log n)
+- After each instertion and deletion, balancing operations must be performed.
 
+An example of an AVL tree where the heights are shown next to the nodes:
+| <img src="./images/AVLTREE.png" alt="AVL-Trees" width="500" /> |
+|:--:|
+| *AVL Trees* |
 
-
-
-
-
-Red Black Tree
-
-# References
-1. Aditya Bhargava. 2016. Grokking Algorithms: An illustrated guide for programmers and other curious people (1st. ed.). Manning Publications Co., USA.
-2. Cormen, T. H., Leiserson, C. E., Rivest, R. L.,, Stein, C. (2001). Introduction to Algorithms. The MIT Press. ISBN: 0262032937
-3. Sahillioğlu, Y. (2021). Hash Tables [PowerPoint slides]. https://user.ceng.metu.edu.tr/~ys/ceng213-ds/ 
-4. Sedgewick, R., Wayne, K. (2011). Algorithms, 4th Edition. Addison-Wesley. ISBN: 978-0-321-57351-3
-5. Redekopp, M., Kempe, D., Batista, S., (2021). Hash Tables & Functions [PowerPoint slides]. http://ee.usc.edu/~redekopp/cs104/slides/L21_Hashing.pdf
-6. Michael T. Goodrich, Roberto Tamassia, and Michael H. Goldwasser. 2014. Data Structures and Algorithms in Java (6th. ed.). Wiley Publishing.
-7. Hashtable in java with example by Chaitanya Singh, 2015, https://beginnersbook.com/2014/07/hashtable-in-java-with-example/. Accessed 29 Jul. 2021.
-
-
-
+## AVL Trees vs Red Black Trees:
+- AVL trees provide faster lookups than Red Black Trees because they are more strictly balanced.
+- Red Black Trees provide faster insertion and removal operations than AVL trees as fewer rotations are done due to relatively relaxed balancing.
+	- To keep the tree balanced AVL trees does more CPU instructions per operation (insert/delete) at average.
+- AVL trees store the balance factor at each node. This takes O(N) extra space.
+-  However, if we know that the keys that will be inserted in the tree will always be greater than zero, we can use the sign bit of the keys to store the colour information of a red-black tree. Thus, in such cases red-black tree takes no extra space.
+- Red Black Trees are used in most of the language libraries like map, multimap, multiset in C++ whereas AVL trees are used in databases where faster retrievals are required.
+- Thus for a look-up intensive task using an AVL tree is advantageous.
+- For an insert intensive tasks, using a Red-Black tree is adventageous.
