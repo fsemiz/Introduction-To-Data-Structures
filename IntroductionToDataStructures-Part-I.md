@@ -143,51 +143,6 @@ Following picture represents array myList. Here, myList holds ten double values 
 |:--:|
 | *Retrieved from https://www.tutorialspoint.com/java/java_arrays.htm* |
 
-#### Lists in Python Programming Language
-
-A list in Python is a collection of items which can contain elements of multiple data types, which may be either numeric, character logical values, etc. It is an ordered collection supporting negative indexing. A list can be created using [] containing data values. 
-
-Contents of lists can be easily merged and copied using python’s inbuilt functions.
-
-```Python
-# creating a list containing elements 
-# belonging to different data types
->>> sample_list = [1,"Yash",['a','e']]
->>> print(sample_list)
-[1, 'Yash', ['a', 'e']]
-```
-
-| Operation | Complexity | Usage | Method |
-| :--: | :--: | :--: | :--: |
-| List creation | O(n) or O(1) | x = list(y) | calls \_\_init\_\_(y) |
-| indexed get | O(1) | a = x[i] | x.\_\_getitem\_\_(i) |
-| indexed set | O(1) | x[i] = a | x.\_\_setitem\_\_(i,a) |
-| concatenate | O(n) | z=x+y  | z = x.\_\_add\_\_(y) |
-| append | O(1) | x.append(a) | x.append(a) |
-| insert | O(n) | x.insert(i,e) | x.insert(i,e) |
-| delete | O(n) | del x[i] | x.\_\_delitem\_\_(i) |
-| equality | O(n) | x == y | x.\_\_eq\_\_(y) |
-| iterate | O(n) | for a in x: | x.\_\_iter\_\_() |
-| length | O(1) | len(x) | x.\_\_len\_\_() |
-| membership | O(n) | a in x | x.\_\_contains\_\_(a) |
-| sort | O(n log n) | x.sort() | x.sort() |
-
-Each of the operations in the table has an associated complexity. 
-
-The performance of an algorithm depends on the complexity of the operations used in implementing that algorithm. 
-
-The indexed get and indexed set operations can be observed to have O(1) complexity. This complexity is achieved because the memory of a computer is randomly accessible, which is why it is called Random Access Memory.
-
-**Additional Information:**
-
-Python's List is a dynamic array. This is implementation dependent for each Python Interpreter:
-
-- CPython uses an array of pointers
-- Jython uses an ArrayList
-- IronPython also uses an array. 
-
-You can browse the source code to find out. Thus they all have O(1) random access.
-
 #### Arrays in Python Programming Language
 
 An array is a vector containing homogeneous elements i.e. belonging to the same data type. Elements are allocated with contiguous memory locations allowing easy modification, that is, addition, deletion, accessing of elements. 
@@ -238,6 +193,244 @@ The NumPy documentation recommends importing the numpy module as np so that you 
 >>> numbers = np.array([x for x in range(2, 21, 2)])
 >>> numbers = np.array([[2, 4, 6, 8, 10], [1, 3, 5, 7, 9]])
 ```
+
+A data type object (an instance of numpy.dtype class) describes how the bytes in the fixed-size block of memory corresponding to an array item should be interpreted. It describes the following aspects of the data:
+
+1) Type of the data (integer, float, Python object, etc.)
+
+2) Size of the data (how many bytes is in e.g. the integer)
+
+3) Byte order of the data (little-endian or big-endian)
+
+4) If the data type is structured data type, an aggregate of other data types, (e.g., describing an array item consisting of an integer and a float),
+
+    - what are the names of the “fields” of the structure, by which they can be accessed,
+
+    - what is the data-type of each field, and
+
+    - which part of the memory block each field takes.
+
+5) If the data type is a sub-array, what is its shape and data type.
+
+```Python
+# Python program to demonstrate 
+# the use of data type object with structured array.
+import numpy as np
+  
+dt = np.dtype([('name', np.unicode_, 16), ('grades', np.float64, (2,))])
+  
+# x is a structured array with names and marks of students.
+# Data type of name of the student is np.unicode_ and 
+# data type of marks is np.float(64)
+x = np.array([('Sarah', (8.0, 7.0)), ('John', (6.0, 7.0))], dtype=dt)
+  
+print(x[1])
+print("Grades of John are: ",x[1]['grades'])
+print("Names are: ",x['name'])
+```
+
+For more detailed information: https://numpy.org/doc/stable/reference/arrays.dtypes.html
+
+### Dynamic Array Data Structure
+
+In computer science, **a dynamic array, growable array, resizable array, dynamic table, mutable array, or array list** is a random access, variable-size list data structure that allows elements to be added or removed. It is supplied with standard libraries in many modern mainstream programming languages. Dynamic arrays overcome a limit of static arrays, which have a fixed capacity that needs to be specified at allocation.
+
+A Dynamic array (vector in C++, ArrayList in Java) automatically grows when we try to make an insertion and there is no more space left for the new item. Usually the area doubles in size.
+
+**A simple dynamic array can be constructed by allocating an array of fixed-size, typically larger than the number of elements immediately required.** The elements of the dynamic array are stored contiguously at the start of the underlying array, and the remaining positions towards the end of the underlying array are reserved, or unused. Elements can be added at the end of a dynamic array in constant time by using the reserved space until this space is completely consumed.
+
+**When all space is consumed, and an additional element is to be added, the underlying fixed-sized array needs to be increased in size. Typically resizing is expensive because you have to allocate a bigger array and copy over all of the elements from the array you have overgrow before we can finally append our item.**
+
+| ![Dynamic Array Example](./images/dynamic-array.png) |
+|:--:|
+| *Retrieved from https://en.wikipedia.org/wiki/Dynamic_array* |
+
+Approach: When we enter an element in array but array is full then you create a function, this function creates a new array double size or as you wish and copy all element from the previous array to a new array and return this new array. Also, we can reduce the size of the array, and add an element at a given position, remove the element at the end default and at the position also.
+
+#### Running Times for Common Operations in Dynamic Arrays
+
+| Location | Add (Create) | Remove (Delete) | Read | Write (Update) |
+| :--: | :--: | :--: | :--: | :--: |
+| Beginning | O(n) | O(n) | O(1) | O(1) |
+| End | **O(1) Amortized** | **O(1) Amortized** | O(1) | O(1) |
+| Middle | O(n) | O(n) | O(1) | O(1) |
+
+#### Dynamic Array in Java Programming Language
+
+```Java
+// Java program deals with all operation of a dynamic array
+// add, remove, resize memory of array is the main feature
+public class DynamicArray {
+  
+    // create three variable array[] is a array,
+    // count will deal with no of element add by you and
+    // size will with size of array[]
+    private int array[];
+    private int count;
+    private int size;
+    // constructor initialize value to variable
+  
+    public DynamicArray()
+    {
+        array = new int[1];
+        count = 0;
+        size = 1;
+    }
+    // function add an element at the end of array
+  
+    public void add(int data)
+    {
+  
+        // check no of element is equql to size of array
+        if (count == size) {
+            growSize(); // make array size double
+        } // insert element at end of array
+        array[count] = data;
+        count++;
+    }
+  
+    // function makes size double of array
+    public void growSize()
+    {
+  
+        int temp[] = null;
+        if (count == size) {
+  
+            // temp is a double size array of array
+            // and store array elements
+            temp = new int[size * 2];
+            {
+                for (int i = 0; i < size; i++) {
+                    // copy all array value into temp
+                    temp[i] = array[i];
+                }
+            }
+        }
+  
+        // double size array temp initialize
+        // into variable array again
+        array = temp;
+         
+        // and make size is double also of array
+        size = size * 2;
+    }
+  
+    // function shrink size of array
+    // which block unnecessary remove them
+    public void shrinkSize()
+    {
+        int temp[] = null;
+        if (count > 0) {
+  
+            // temp is a count size array
+            // and store array elements
+            temp = new int[count];
+            for (int i = 0; i < count; i++) {
+  
+                // copy all array value into temp
+                temp[i] = array[i];
+            }
+  
+            size = count;
+  
+            // count size array temp initialize 
+            // into variable array again
+            array = temp;
+        }
+    }
+    // function add an element at given index
+  
+    public void addAt(int index, int data)
+    {
+        // if size is not enough make size double
+        if (count == size) {
+            growSize();
+        }
+  
+        for (int i = count - 1; i >= index; i--) {
+  
+            // shift all element right 
+            // from given index
+            array[i + 1] = array[i];
+        }
+  
+        // insert data at given index
+        array[index] = data;
+        count++;
+    }
+  
+    // function remove last element or put
+    // zero at last index
+    public void remove()
+    {
+        if (count > 0) {
+            array[count - 1] = 0;
+            count--;
+        }
+    }
+  
+    // function shift all element of right
+    // side from given index in left
+    public void removeAt(int index)
+    {
+        if (count > 0) {
+            for (int i = index; i < count - 1; i++) {
+  
+                // shift all element of right 
+                // side from given index in left
+                array[i] = array[i + 1];
+            }
+            array[count - 1] = 0;
+            count--;
+        }
+    }
+}
+```
+
+#### Lists in Python Programming Language
+
+A list in Python is a collection of items which can contain elements of multiple data types, which may be either numeric, character logical values, etc. It is an ordered collection supporting negative indexing. A list can be created using [] containing data values. 
+
+Contents of lists can be easily merged and copied using python’s inbuilt functions.
+
+```Python
+# creating a list containing elements 
+# belonging to different data types
+>>> sample_list = [1,"Yash",['a','e']]
+>>> print(sample_list)
+[1, 'Yash', ['a', 'e']]
+```
+
+| Operation | Complexity | Usage | Method |
+| :--: | :--: | :--: | :--: |
+| List creation | O(n) or O(1) | x = list(y) | calls \_\_init\_\_(y) |
+| indexed get | O(1) | a = x[i] | x.\_\_getitem\_\_(i) |
+| indexed set | O(1) | x[i] = a | x.\_\_setitem\_\_(i,a) |
+| concatenate | O(n) | z=x+y  | z = x.\_\_add\_\_(y) |
+| append | O(1) | x.append(a) | x.append(a) |
+| insert | O(n) | x.insert(i,e) | x.insert(i,e) |
+| delete | O(n) | del x[i] | x.\_\_delitem\_\_(i) |
+| equality | O(n) | x == y | x.\_\_eq\_\_(y) |
+| iterate | O(n) | for a in x: | x.\_\_iter\_\_() |
+| length | O(1) | len(x) | x.\_\_len\_\_() |
+| membership | O(n) | a in x | x.\_\_contains\_\_(a) |
+| sort | O(n log n) | x.sort() | x.sort() |
+
+Each of the operations in the table has an associated complexity. 
+
+The performance of an algorithm depends on the complexity of the operations used in implementing that algorithm. 
+
+The indexed get and indexed set operations can be observed to have O(1) complexity. This complexity is achieved because the memory of a computer is randomly accessible, which is why it is called Random Access Memory.
+
+**Additional Information:**
+
+Python's List is a dynamic array. This is implementation dependent for each Python Interpreter:
+
+- CPython uses an array of pointers
+- Jython uses an ArrayList
+- IronPython also uses an array. 
+
+You can browse the source code to find out. Thus they all have O(1) random access.
 
 #### List vs. Array Performance in Python Programming Language
 
