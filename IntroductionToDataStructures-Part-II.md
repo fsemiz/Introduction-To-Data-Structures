@@ -343,7 +343,7 @@ In java, a hash table can be created in the following ways:
 **K** is the type of keys maintained by this map, **V** is the type of mapped values
 
 The first line creates an empty hashtable. 
-- The default load factor of 0.75 and an the default initial capacity of the hash table is 11. 
+- The default load factor of 0.75 and the default initial capacity of the hash table is 11. 
 
 Second line creates an empty hashtable where the initial capacity is provided by the parameter.
 - The default load factor is 0.75.
