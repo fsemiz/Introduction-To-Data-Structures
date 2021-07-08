@@ -31,7 +31,7 @@ To put it briefly, data structures are containers used to store data. However, e
 | :--: |
 | *Retrieved from https://www.linkedin.com/pulse/eating-soup-forks-michael-henderson/* |
 
-## Brief Introduction to Java Collection Framework
+## Brief Overview for Java Collection Framework
 
 The term "collection" refers to a set of items which are mostly of the same data type, and used for a specific purpose. There are a lot of collections and although they often look similar from the outside, internally, they work in very different ways. Java provides a large amount of pre-made collections.
 
@@ -60,6 +60,26 @@ Other data structures in this document will be implemented using Arrays or Linke
 You can also check Java Collections Framework Benchmark Tool for performance comparison between these data structures: 
 
 https://github.com/kaan-keskin/java-collections-benchmark
+
+## Brief Overview for Python Collections Module
+
+The collection Module in Python provides different types of containers. A Container is an object that is used to store different objects and provide a way to access the contained objects and iterate over them. Some of the built-in containers are Tuple, List, Dictionary, etc.
+
+**Content of Collections Module:**
+
+- Counters
+- OrderedDict
+- DefaultDict
+- ChainMap
+- NamedTuple
+- DeQue
+- UserDict
+- UserList
+- UserString
+
+For more information you can read official documentation: 
+
+https://docs.python.org/3/library/collections.html
 
 ## Basic Data Structures: Arrays and Linked Lists
 
@@ -802,7 +822,7 @@ Doubly-Linked List Node Contains:
 | Erase(key) | O(n) | O(n) |
 | Empty() | O(1) | O(1) |
 | AddBefore(node,key) | **O(1)** | **O(1)** |
-| AddAfter(node,key) | O(n) | O(n) |
+| AddAfter(node,key) | **O(1)** | **O(1)** |
 
 #### Implementing a Singly-Linked List in Java Programming Language
 
@@ -1238,6 +1258,10 @@ class LinkedList:
         else:
             self.append(item)
 ```
+
+You can find detailed implementation here: 
+
+https://www.devmaking.com/learn/data-structures/doubly-linked-list/
 
 ##### Running Times for Implemented Singly-Linked List in Python Programming Language
 
