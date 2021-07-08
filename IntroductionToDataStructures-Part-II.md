@@ -65,10 +65,6 @@ The conversion function is known as a hash function, h(k) It should be fast/easy
 |:--:|
 | *Array to dictionary conversion* |
 
-Although searching for an element in a hash table can take as long as searching for an element in a
-linked list—O(n) time in the worst case—in practice, hashing performs extremely well. 
-
-    Under reasonable assumptions, the average time to search for an element in a hash table is O(1).
 
 **How to implement hast tables ?**
 
@@ -107,6 +103,12 @@ When the set K of keys stored in a dictionary is much smaller than the universe 
 With direct addressing, an element with key k is stored in slot k. With hashing, this element is stored in slot h(k); that is, we use a hash function h to compute the slot from the key k. Here, h maps the universe U of keys into the slots of a hash table T=[0.. m-1].
 
 *Direct Access Table (timing always good, space terrible) vs. Hash Table (timing good on average, space always good).*
+
+Although searching for an element in a hash table can take as long as searching for an element in a
+linked list—O(n) time in the worst case—in practice, hashing performs extremely well. 
+
+    Under reasonable assumptions, the average time to search for an element in a hash table is O(1).
+
 
 **Hash Function:**
 
