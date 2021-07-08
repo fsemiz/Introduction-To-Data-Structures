@@ -37,7 +37,7 @@ A hash table (hash map) is a data structure that implements an associative array
 	- The hashing is used for the linking of the file name to the path of the file. 
 - Password Verification
 	- When you use some web service and enter your credentials to log in, a hash value of your password is computed on the client-side and then sent to the server which then compares that hash value with the hash value of the stored password.
-- Pattern Matching
+- Pattern Matching - The pattern matching is used to detect plagiarism.
 - Programming Languages
 - Compilers
 	- For identifying the keywords in the programming languages, the compiler uses the hash table to store these keywords and other identifiers to compile the program.
