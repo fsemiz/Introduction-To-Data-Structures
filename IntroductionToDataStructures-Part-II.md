@@ -31,6 +31,17 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
     
 A hash table (hash map) is a data structure that implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index, also called a hash code, into an array of buckets or slots, from which the desired value can be found. A hash table generalizes the idea of an simple array in which we can access an ordinary elements position in O(1) time. If number of keys stored is small compared to total number of keys then it is effective to use an hash table. One idea that hash tables use is to compute the key from the index instead of directly using the key.
 
+### Applications of Hash Tables
+
+- File System
+	- The hashing is used for the linking of the file name to the path of the file. 
+- Password Verification
+	- When you use some web service and enter your credentials to log in, a hash value of your password is computed on the client-side and then sent to the server which then compares that hash value with the hash value of the stored password.
+- Pattern Matching - The pattern matching is used to detect plagiarism.
+- Programming Languages
+- Compilers
+	- For identifying the keywords in the programming languages, the compiler uses the hash table to store these keywords and other identifiers to compile the program.
+
 An array maps integers to values
 + Given i , array[i] returns the value in O(1)
 
@@ -425,16 +436,6 @@ The name of the employee is John Doe.
 The position of John Doe is a Software Engineer.
 {}
 ```
-### Applications of Hash Tables
-
-- File System
-	- The hashing is used for the linking of the file name to the path of the file. 
-- Password Verification
-	- When you use some web service and enter your credentials to log in, a hash value of your password is computed on the client-side and then sent to the server which then compares that hash value with the hash value of the stored password.
-- Pattern Matching
-- Programming Languages
-- Compilers
-	- For identifying the keywords in the programming languages, the compiler uses the hash table to store these keywords and other identifiers to compile the program.
 
 # Trees
 
@@ -457,6 +458,17 @@ The position of John Doe is a Software Engineer.
 | <img src="images/recursive.png" width="500"> | <img src="images/TreeFileSystem.png" width="500"> |
 |------------|-------------|
 | Trees are recursive data structures!      | File systems are example of trees. ([image](https://medium.com/basecs/how-to-not-be-stumped-by-trees-5f36208f68a7))       |
+
+
+### Applications of Trees
+- XML Parser uses tree algorithms.
+- Decision-based algorithm is used in machine learning which works upon the algorithm of tree.
+- Databases also uses tree data structures for indexing.
+- Domain Name Server(DNS) also uses tree structures.
+- File explorer/my computer of mobile/any computer
+- BST used in computer Graphics
+- In robotics and planning trees are used to store the possible states of the solution space. Algorithms generally traverses that tree to find the solution.
+
 
 ## Java Tree Implementation
 
