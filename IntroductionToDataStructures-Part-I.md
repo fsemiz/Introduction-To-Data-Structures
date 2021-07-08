@@ -31,6 +31,36 @@ To put it briefly, data structures are containers used to store data. However, e
 | :--: |
 | *Retrieved from https://www.linkedin.com/pulse/eating-soup-forks-michael-henderson/* |
 
+## Brief Introduction to Java Collection Framework
+
+The term "collection" refers to a set of items which are mostly of the same data type, and used for a specific purpose. There are a lot of collections and although they often look similar from the outside, internally, they work in very different ways. Java provides a large amount of pre-made collections.
+
+The Collection in Java is a framework that provides an architecture to store and manipulate the group of objects.
+
+Java Collections can achieve all the operations that you perform on a data such as searching, sorting, insertion, manipulation, and deletion.
+
+Java Collection means a single unit of objects. Java Collection framework provides many interfaces (Set, List, Queue, Deque) and classes (ArrayList, Vector, LinkedList, PriorityQueue, HashSet, LinkedHashSet, TreeSet).
+
+| ![Java Collection Framework](./images/Collection-Framework-hierarchy.png) |
+|:--:|
+| *Retrieved from https://javabydeveloper.com/collection-framework-key-interfaces/* |
+
+For more information you can read official documentation: 
+
+https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html
+
+Throughout this document we will use below Java Collections Framework data structures as an example:
+
+- ArrayList : In the Dynamic Array section.
+- LinkedList : In the Linked List section.
+- HashTable : In the Hash Table section.
+
+Other data structures in this document will be implemented using Arrays or Linked Lists for educational purposes.
+
+You can also check Java Collections Framework Benchmark Tool for performance comparison between these data structures: 
+
+https://github.com/kaan-keskin/java-collections-benchmark
+
 ## Basic Data Structures: Arrays and Linked Lists
 
 ### Array Data Structure
@@ -1427,4 +1457,3 @@ Since the entries array is populated sequentially, it naturally ensures the orde
 The initial reason for this change was saving space by sharing hash tables of multiple dicts with the same set of keys (which in Python means instances of the same class, for example).
 
 **But not sets though! Sets are still unordered!**
-
