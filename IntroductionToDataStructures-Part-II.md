@@ -151,7 +151,7 @@ private int hash(Key key) {
 
 The code masks off the sign bit (to turn the 32-bit integer into a 31-bit nonnegative integer) and then computing the remainder when dividing by M, as in modular hashing.
 
-**User-defined hashCode():** Client code expects that hashCode() disperses the keys uniformly among the possible 32-bit result values. That is, for any object x, you can write x.hashCode() and, in principle, expect to get any one of the 2^32 possible 32-bit values with equal likelihood. Java provides hashCode() implementations that aspire to this functionality for many common types (including String, Integer, Double, Date, and URL), but for your own type, you have to try to do it on your own. Program PhoneNumber.java illustrates one way to proceed: make integers from the instance variables and use modular hashing. Program Transaction.java illustrates an even simpler approach: use the hashCode() method for the instance variables to convert each to a 32-bit int value and then do the arithmetic. 
+**User-defined hashCode():**
 
 We have three primary requirements in implementing a good hash function for a given data type:
 - It should be deterministic—equal keys must produce the same hash value.
