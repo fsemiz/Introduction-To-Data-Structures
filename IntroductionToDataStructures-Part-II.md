@@ -23,7 +23,8 @@ Java Collections Framework Benchmark Tool: https://github.com/kaan-keskin/java-c
 - Purdue University CS251 Slides
 
 ### Hash Tables
-    Hash Table: A hash table is a data structure that implements an associative array abstract data type, a structure that can map keys to values.
+    Hash Table: A hash table is a data structure that implements an associative array abstract data type, 
+    a structure that can map keys to values.
     
 | <img src="./images/hash_tables_intro.png" alt="Algorithm"  width="700" /> |
 |:--:|
