@@ -968,12 +968,13 @@ Usage:
 private BinaryTree createBinaryTree() {
     BinaryTree bt = new BinaryTree();
 
-    bt.add(8);
-    bt.add(3);
-    bt.add(2);
-    bt.add(6);
-    bt.add(7);
+    
     bt.add(4);
+    bt.add(2);
+    bt.add(7);
+    bt.add(8);
+    bt.add(6);
+    bt.add(3);
     bt.add(1);
 
     return bt;
@@ -1009,12 +1010,12 @@ def insert(root, key):
 Usage:
 
 ```Python 
-r = Node(8)
-r = insert(r, 3)
+r = Node(4)
+r = insert(r, 7)
 r = insert(r, 2)
 r = insert(r, 6)
-r = insert(r, 7)
-r = insert(r, 4)
+r = insert(r, 3)
+r = insert(r, 8)
 r = insert(r, 1)
  ```
 
